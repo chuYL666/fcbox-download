@@ -1,0 +1,11 @@
+# WorkBuddy 生成的工作区元数据，不入库
+.workbuddy/
+.wbapp_*.genie
+
+# 系统 / 编辑器
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+.idea/
+.vscode/

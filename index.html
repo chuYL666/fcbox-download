@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>智能柜软件清单 · 下载站</title>
+<meta name="description" content="丰巢智能柜各柜型 / 场景的软件安装包（APK）可视化下载页，数据自动同步自企业微信《丰巢智能柜软件应用清单》文档。">
+<link rel="preconnect" href="https://fchibox-1251779293.file.myqcloud.com">
+<link rel="stylesheet" href="./assets/styles.css?v=202611222208">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23e1251b'/%3E%3Cpath d='M9 11h14v13H9z' fill='%23fff' opacity='.95'/%3E%3Cpath d='M9 11h14v4H9z' fill='%230c1220' opacity='.25'/%3E%3Cpath d='M12 8h8v3h-8z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3.5" y="3.5" width="17" height="17" rx="3"></rect>
+          <path d="M3.5 9h17M3.5 15h17M12 9v2M12 15v2"></path>
+        </svg>
+      </span>
+      <div class="brand-text">
+        <strong>下载站</strong>
+        <span>城市运维技术专用</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span class="sync-chip" id="syncChip">
+        <i class="dot"></i><span id="syncText">正在载入…</span>
+      </span>
+    </div>
+  </div>
+</header>
+
+<div class="wx-bar" id="wxBar" hidden>
+  <span class="wx-bar-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"></path><path d="M8 7l4-4 4 4"></path><path d="M4 14v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"></path></svg>
+  </span>
+  <p>微信内不支持直接下载 APK，请点右上角 <b>「···」→「在浏览器打开」</b> 后再下载</p>
+  <button class="wx-bar-btn" id="wxBarCopy" type="button">复制本页链接</button>
+</div>
+
+<main class="page">
+
+  <section class="hero">
+    <h1>智能柜软件清单</h1>
+    <p class="hero-meta" id="heroMeta"></p>
+  </section>
+
+  <section class="controls" id="controls">
+    <div class="controls-row">
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4 4"></path></svg>
+        <input id="q" type="search" placeholder="搜索应用、文件名或柜型…" autocomplete="off" spellcheck="false">
+      </label>
+      <button class="chip all" id="allChip" type="button" aria-pressed="true" aria-expanded="false"></button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <button class="ghost-btn" id="copySceneBtn" type="button" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M15 5.5A1.5 1.5 0 0 0 13.5 4H6a2 2 0 0 0-2 2v7.5A1.5 1.5 0 0 0 5.5 15"></path></svg>
+      复制本场景全部链接
+    </button>
+  </section>
+
+  <section class="scene-note" id="sceneNote" hidden></section>
+
+  <section class="grid" id="grid" aria-live="polite"></section>
+
+  <section class="extras" id="extras" hidden>
+    <div class="section-head">
+      <h2>配套工具</h2>
+      <p>监控客户端与现场常用工具，按需下载</p>
+    </div>
+    <div class="extras-grid" id="extrasGrid"></div>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-meta">
+      <span id="footSync">—</span>
+      <a id="footSource" href="#" target="_blank" rel="noopener">查看源文档 →</a>
+    </div>
+  </footer>
+</main>
+
+<div class="wx-guide" id="wxGuide" hidden>
+  <div class="wx-guide-mask" data-close="1"></div>
+  <div class="wx-guide-hint" aria-hidden="true">
+    <span class="wx-guide-dots">···</span>
+    <svg class="wx-guide-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6"></path><path d="M6 11l6-6 6 6"></path></svg>
+  </div>
+  <div class="wx-guide-card" role="dialog" aria-modal="true" aria-labelledby="wxGuideTitle">
+    <h3 id="wxGuideTitle">请在浏览器中打开</h3>
+    <p class="wx-guide-desc">微信内置浏览器会拦截 APK 下载，按下面两步即可正常下载：</p>
+    <ol class="wx-guide-steps">
+      <li>点右上角 <b>「···」</b>，选择 <b>「在浏览器打开」</b></li>
+      <li>在浏览器里重新点一次下载按钮</li>
+    </ol>
+    <p class="wx-guide-file" id="wxGuideFile"></p>
+    <div class="wx-guide-actions">
+      <button class="wx-guide-copy" id="wxGuideCopy" type="button">复制下载链接</button>
+      <button class="wx-guide-close" id="wxGuideClose" type="button">知道了</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="./data.js?v=202611222208"></script>
+<script src="./assets/app.js?v=202611222208"></script>
+</body>
+</html>
