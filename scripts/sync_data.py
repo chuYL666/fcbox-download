@@ -58,6 +58,21 @@ MANUAL_APPS = [
             },
         ],
     },
+    {
+        "name": "智莱驱动",
+        "desc": "智莱柜旧版驱动 V6.9.6，新版不兼容时回退用",
+        "owner": "何晋",
+        "packages": [
+            {
+                "scenario": "c8",
+                "file": "zhilai_v6.9.6.apk",
+                "url": ("https://common.fcbox.com/cdn/frontApk/ops/zhilai/"
+                        "zhilai_v6.9.6.apk?v=6.9.6"),
+                "version": "6.9.6",
+                "inherited": False,
+            },
+        ],
+    },
 ]
 
 

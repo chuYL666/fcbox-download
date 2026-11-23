@@ -1,9 +1,9 @@
 {
-  "digest": "961e31c671b9",
-  "updatedAt": "2026-11-23 16:30",
+  "digest": "ea939bd6e8fa",
+  "updatedAt": "2026-11-23 16:36",
   "stats": {
-    "apps": 9,
+    "apps": 10,
     "scenarios": 10,
-    "packages": 75
+    "packages": 76
   }
 }

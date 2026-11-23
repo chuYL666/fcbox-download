@@ -669,6 +669,21 @@ window.FCBOXDATA = {
           "inherited": false
         }
       ]
+    },
+    {
+      "id": "a10",
+      "name": "智莱驱动",
+      "desc": "智莱柜旧版驱动 V6.9.6，新版不兼容时回退用",
+      "owner": "何晋",
+      "packages": [
+        {
+          "scenario": "c8",
+          "file": "zhilai_v6.9.6.apk",
+          "url": "https://common.fcbox.com/cdn/frontApk/ops/zhilai/zhilai_v6.9.6.apk?v=6.9.6",
+          "version": "6.9.6",
+          "inherited": false
+        }
+      ]
     }
   ],
   "extras": [
@@ -689,10 +704,10 @@ window.FCBOXDATA = {
     }
   ],
   "stats": {
-    "apps": 9,
+    "apps": 10,
     "scenarios": 10,
-    "packages": 75
+    "packages": 76
   },
-  "updatedAt": "2026-11-23 16:30",
-  "digest": "961e31c671b9"
+  "updatedAt": "2026-11-23 16:36",
+  "digest": "ea939bd6e8fa"
 };
