@@ -41,6 +41,25 @@ MANUAL_EXTRAS = [
     },
 ]
 
+# 源文档里没有、但现场需要用到的手工维护应用（每次同步都会保留，追加在表体应用之后）
+MANUAL_APPS = [
+    {
+        "name": "丰巢老驱动",
+        "desc": "智能柜5 旧版驱动，新版不兼容时回退用",
+        "owner": "何晋",
+        "packages": [
+            {
+                "scenario": "c8",
+                "file": "fcbox_driver_cabinet_village_v1.104.0.apk",
+                "url": ("https://fchibox-1251779293.file.myqcloud.com/factory/standard-box/"
+                        "fcbox_driver_cabinet_village_v1.104.0.apk"),
+                "version": "1.104.0",
+                "inherited": False,
+            },
+        ],
+    },
+]
+
 
 def log(msg):
     print(msg, flush=True)
@@ -251,6 +270,17 @@ def build(payload):
             continue
         seen.add(item["url"])
         extras.append(dict(item))
+
+    # 手工维护的应用，排在表体应用之后
+    for item in MANUAL_APPS:
+        idx += 1
+        apps.append({
+            "id": "a%d" % idx,
+            "name": item["name"],
+            "desc": item.get("desc", ""),
+            "owner": item.get("owner", ""),
+            "packages": [dict(p) for p in item["packages"]],
+        })
 
     total = sum(len(a["packages"]) for a in apps)
     return {

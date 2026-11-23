@@ -233,15 +233,21 @@
 
 
   /* ---------------------------------------------------------------- cards */
-  function renderRow(p, hideScene) {
+  function renderRow(p, hideScene, appName) {
     var g = sceneGroup(p.scenario);
     var ditto = p.inherited ? '<span class="ditto" title="原表标记为「同上」，与左侧场景同一安装包">承上</span>' : '';
     var noLink = !p.url;
-    return '<div class="pkg' + (p.inherited ? ' inherited' : '') + (hideScene ? ' no-scene' : '') + '">' +
+    return '<div class="pkg' + (p.inherited ? ' inherited' : '') + (hideScene ? ' no-scene' : '') + '"' +
+        ' data-hit-key="' + esc(p.scenario + '|' + p.file) + '"' +
+        ' data-hit-name="' + esc((appName ? appName + ' · ' : '') + p.file) + '"' +
+        ' data-hit-scene="' + esc(p.scenario) + '">' +
       (hideScene ? '' :
         '<span class="pkg-scene" data-group="' + esc(g) + '" style="' + sceneStyle(p.scenario) +
         '" title="' + esc(sceneName(p.scenario)) + '">' + esc(sceneName(p.scenario)) + '</span>') +
-      '<code class="pkg-file" title="' + esc(p.file) + '">' + esc(p.file) + ditto + '</code>' +
+      '<span class="pkg-main">' +
+        '<code class="pkg-file" title="' + esc(p.file) + '">' + esc(p.file) + ditto + '</code>' +
+        '<span class="pkg-hits" hidden></span>' +
+      '</span>' +
       '<span class="pkg-actions">' +
         (noLink
           ? '<span class="icon-btn" title="原表未填链接" style="cursor:default">—</span>'
@@ -290,7 +296,7 @@
       } else {
         var collapsed = pkgs.length > COLLAPSE_AT;
         var single = state.scene !== 'all';
-        var rows = pkgs.map(function (p) { return renderRow(p, single); }).join('');
+        var rows = pkgs.map(function (p) { return renderRow(p, single, a.name); }).join('');
         body = '<div class="pkgs">' + rows + '</div>';
         if (collapsed) {
           body = '<div class="pkgs pkgs-fold" data-fold="1">' + rows + '</div>' +
@@ -319,6 +325,7 @@
     }
     els.grid.innerHTML = cards.join('');
     applyFold();
+    paintHits();
   }
 
   function applyFold() {
@@ -339,13 +346,17 @@
                  { c: '#b45309', c2: '#f59e0b', soft: '#fff8ea', line: '#ffe6c2' },
                  { c: '#6d28d9', c2: '#a78bfa', soft: '#f2ecff', line: '#ded1ff' }][i % 3];
       return '<div class="extra-card" style="--accent:' + pal.c + ';--soft:' + pal.soft +
-        ';--accent-line:' + pal.line + '">' +
+        ';--accent-line:' + pal.line + '"' +
+        ' data-hit-key="' + esc('extras|' + e.file) + '"' +
+        ' data-hit-name="' + esc(e.label + ' · ' + e.file) + '"' +
+        ' data-hit-scene="extras">' +
         '<span class="card-icon">' + ICONS.camera + '</span>' +
         '<div class="card-titles">' +
           '<div class="card-name">' + esc(e.label) + '</div>' +
           '<div class="card-desc">' + esc(e.file) + '</div>' +
         '</div>' +
         '<span class="extra-actions">' +
+          '<span class="pkg-hits" hidden></span>' +
           '<a class="dl-btn" href="' + esc(e.url) + '" download target="_blank" rel="noopener" ' +
             'data-file="' + esc(e.file) + '" data-copy="' + esc(e.url) + '">' +
             ICONS.dl + '下载</a>' +
@@ -429,6 +440,193 @@
     });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !els.wxGuide.hidden) closeWxGuide();
+    });
+  }
+
+  /* ------------------------------------------- 云服务：下载计数 + 问题反馈 */
+  var CLOUD = window.FCBCloud || null;
+  var hitMap = {};
+  var hitChip = document.getElementById('hitChip');
+  var hitTotalEl = document.getElementById('hitTotal');
+  var footHits = document.getElementById('footHits');
+
+  function cloudDisabled() {
+    return !CLOUD;
+  }
+
+  /* 把云端计数画到每一行（计数为 0 的行不显示，避免满屏 0） */
+  function paintHits() {
+    var total = 0;
+    Object.keys(hitMap).forEach(function (k) { total += hitMap[k]; });
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-hit-key]'), function (host) {
+      var label = host.querySelector('.pkg-hits');
+      if (!label) return;
+      var n = hitMap[host.getAttribute('data-hit-key')] || 0;
+      if (n > 0) {
+        label.textContent = n + ' 次下载';
+        label.title = '本站累计下载 ' + n + ' 次';
+        label.hidden = false;
+      } else {
+        label.hidden = true;
+      }
+    });
+
+    if (total > 0) {
+      var num = total.toLocaleString('zh-CN');
+      if (hitChip && hitTotalEl) {
+        hitTotalEl.textContent = num + ' 次下载';
+        hitChip.title = '本站累计下载次数（云端统计）';
+        hitChip.hidden = false;
+      }
+      if (footHits) {
+        footHits.textContent = '累计下载 ' + num + ' 次';
+        footHits.hidden = false;
+      }
+    }
+  }
+
+  /* 点下载即记一次；失败静默，绝不影响下载本身 */
+  function countDownload(host) {
+    if (cloudDisabled() || !host) return;
+    var key = host.getAttribute('data-hit-key');
+    if (!key || host.dataset.counting === '1') return;
+    host.dataset.counting = '1';
+    CLOUD.bump(key, host.getAttribute('data-hit-name') || '',
+      host.getAttribute('data-hit-scene') || '').then(function (n) {
+      delete host.dataset.counting;
+      hitMap[key] = (typeof n === 'number' && n > 0) ? n : (hitMap[key] || 0) + 1;
+      paintHits();
+    }, function () {
+      delete host.dataset.counting;
+    });
+  }
+
+  function loadHits() {
+    if (cloudDisabled()) return;
+    CLOUD.loadHits().then(function (map) {
+      hitMap = map || {};
+      paintHits();
+    }, function () { /* 云不可用：不显示计数，页面照常 */ });
+  }
+
+  /* ------------------------------------------------------------ 反馈弹窗 */
+  var fbEls = {
+    modal: document.getElementById('fbModal'),
+    types: document.getElementById('fbTypes'),
+    pkg: document.getElementById('fbPkg'),
+    msg: document.getElementById('fbMsg'),
+    contact: document.getElementById('fbContact'),
+    hint: document.getElementById('fbHint'),
+    submit: document.getElementById('fbSubmit'),
+    open: document.getElementById('reportBtn')
+  };
+  var fbType = '';
+
+  function fbSetHint(text, ok) {
+    fbEls.hint.textContent = text || '';
+    fbEls.hint.classList.toggle('ok', !!ok);
+  }
+
+  function fbFillPkgs() {
+    if (!fbEls.pkg || fbEls.pkg.dataset.filled === '1') return;
+    var opts = [];
+    DATA.apps.forEach(function (a) {
+      a.packages.forEach(function (p) {
+        opts.push('<option value="' + esc(p.scenario + '|' + p.file) + '">' +
+          esc(a.name + ' · ' + sceneName(p.scenario) + ' · ' + p.file) + '</option>');
+      });
+    });
+    fbEls.pkg.insertAdjacentHTML('beforeend', opts.join(''));
+    fbEls.pkg.dataset.filled = '1';
+  }
+
+  function fbOpen() {
+    fbFillPkgs();
+    fbSetHint('');
+    fbEls.submit.disabled = false;
+    fbEls.modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+  }
+
+  function fbClose() {
+    fbEls.modal.hidden = true;
+    document.documentElement.style.overflow = '';
+  }
+
+  function fbSend() {
+    var msg = (fbEls.msg.value || '').trim();
+    if (!fbType) { fbSetHint('请先选择问题类型'); return; }
+    if (fbType === '其他' && !msg) { fbSetHint('选「其他」时请补一句说明'); return; }
+    if (cloudDisabled()) { fbSetHint('反馈服务当前未连通，请稍后重试'); return; }
+
+    fbEls.submit.disabled = true;
+    fbEls.submit.textContent = '提交中…';
+    fbSetHint('');
+
+    var pkgKey = fbEls.pkg.value || '';
+    var opt = pkgKey ? fbEls.pkg.options[fbEls.pkg.selectedIndex] : null;
+
+    CLOUD.report({
+      pkgKey: pkgKey,
+      pkgName: opt ? opt.textContent : '',
+      scene: pkgKey ? pkgKey.split('|')[0] : '',
+      issueType: fbType,
+      message: msg,
+      contact: (fbEls.contact.value || '').trim(),
+      pageUrl: location.href
+    }).then(function () {
+      fbEls.submit.disabled = false;
+      fbEls.submit.textContent = '提交反馈';
+      fbType = '';
+      Array.prototype.forEach.call(fbEls.types.querySelectorAll('.fb-type'), function (b) {
+        b.setAttribute('aria-pressed', 'false');
+      });
+      fbEls.msg.value = '';
+      fbEls.contact.value = '';
+      fbEls.pkg.selectedIndex = 0;
+      fbSetHint('已收到，感谢反馈！', true);
+      setTimeout(fbClose, 900);
+    }, function (err) {
+      fbEls.submit.disabled = false;
+      fbEls.submit.textContent = '提交反馈';
+      var why = err && err.message;
+      if (why === 'cloud-timeout') fbSetHint('网络超时，请稍后重试');
+      else if (why === 'sdk-timeout' || why === 'sdk-load-failed' || why === 'sdk-unavailable') {
+        fbSetHint('云服务组件没加载成功，请检查网络后重试');
+      } else fbSetHint('提交失败，请稍后重试');
+    });
+  }
+
+  function initCloud() {
+    if (cloudDisabled()) return;
+    loadHits();
+    if (CLOUD.warmup) setTimeout(function () { CLOUD.warmup(); }, 400);
+
+    /* 点下载时计数（捕获阶段，早于微信引导的拦截） */
+    document.addEventListener('click', function (e) {
+      if (IS_WX) return;
+      var btn = e.target.closest ? e.target.closest('.dl-btn') : null;
+      if (!btn) return;
+      countDownload(btn.closest('[data-hit-key]'));
+    }, true);
+
+    fbEls.open.addEventListener('click', fbOpen);
+    fbEls.submit.addEventListener('click', fbSend);
+    fbEls.types.addEventListener('click', function (e) {
+      var btn = e.target.closest('.fb-type');
+      if (!btn) return;
+      fbType = btn.dataset.type;
+      Array.prototype.forEach.call(fbEls.types.querySelectorAll('.fb-type'), function (b) {
+        b.setAttribute('aria-pressed', String(b === btn));
+      });
+      fbSetHint('');
+    });
+    fbEls.modal.addEventListener('click', function (e) {
+      if (e.target.getAttribute && e.target.getAttribute('data-fb-close')) fbClose();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !fbEls.modal.hidden) fbClose();
     });
   }
 
@@ -551,6 +749,7 @@
 
   initMeta();
   initScene();
+  initCloud();
   initWx();
   renderChips();
   renderSceneNote();

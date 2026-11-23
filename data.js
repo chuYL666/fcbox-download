@@ -654,6 +654,21 @@ window.FCBOXDATA = {
           "inherited": false
         }
       ]
+    },
+    {
+      "id": "a9",
+      "name": "丰巢老驱动",
+      "desc": "智能柜5 旧版驱动，新版不兼容时回退用",
+      "owner": "何晋",
+      "packages": [
+        {
+          "scenario": "c8",
+          "file": "fcbox_driver_cabinet_village_v1.104.0.apk",
+          "url": "https://fchibox-1251779293.file.myqcloud.com/factory/standard-box/fcbox_driver_cabinet_village_v1.104.0.apk",
+          "version": "1.104.0",
+          "inherited": false
+        }
+      ]
     }
   ],
   "extras": [
@@ -674,10 +689,10 @@ window.FCBOXDATA = {
     }
   ],
   "stats": {
-    "apps": 8,
+    "apps": 9,
     "scenarios": 10,
-    "packages": 74
+    "packages": 75
   },
-  "updatedAt": "2026-11-22 21:27",
-  "digest": "4fa6ee75b960"
+  "updatedAt": "2026-11-23 16:30",
+  "digest": "961e31c671b9"
 };

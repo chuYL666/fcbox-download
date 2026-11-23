@@ -691,7 +691,8 @@ button { font-family: inherit; cursor: pointer; }
     font-size: 10.5px;
     padding: 2px 8px;
   }
-  .pkg-file { grid-area: file; font-size: 12.5px; }
+  .pkg-main { grid-area: file; }
+  .pkg-file { font-size: 12.5px; }
   .pkg-actions { grid-area: actions; }
   .dl-btn { padding: 8px 14px; font-size: 12.5px; min-height: 36px; border-radius: 9px; }
   .icon-btn { width: 36px; height: 36px; }
@@ -826,4 +827,134 @@ button { font-family: inherit; cursor: pointer; }
   .wx-bar p { flex: 1 1 60%; }
   .wx-guide-card { padding: 20px 17px 16px; }
   .wx-guide-hint { top: 6px; right: 8px; }
+}
+
+
+/* ====================================================== 云服务：下载计数 */
+.stat-chip { gap: 6px; }
+.stat-chip svg { width: 13px; height: 13px; opacity: .78; }
+.stat-chip b { font-weight: 600; color: rgba(255, 255, 255, .92); }
+
+.pkg-main {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+}
+.pkg-main > .pkg-file { flex: 0 1 auto; min-width: 0; }
+
+/* 手机端顶栏放不下统计胶囊，累计次数改由页脚展示 */
+@media (max-width: 720px) {
+  .topbar-right .stat-chip { display: none !important; }
+}
+
+.pkg-hits {
+  flex: none;
+  font-size: 11px;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #f2f5fa;
+  border: 1px solid var(--line);
+}
+
+/* ====================================================== 云服务：问题反馈 */
+.foot-report {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 0; margin: 0;
+  background: none; border: 0;
+  font: inherit; font-size: 12px; font-weight: 500;
+  color: var(--brand);
+  cursor: pointer;
+}
+.foot-report svg { width: 13px; height: 13px; }
+.foot-report:hover { text-decoration: underline; }
+
+.fb-modal { position: fixed; inset: 0; z-index: 95; display: flex; align-items: center; justify-content: center; padding: 18px; }
+.fb-mask { position: absolute; inset: 0; background: rgba(11, 18, 32, .46); backdrop-filter: blur(2px); }
+.fb-card {
+  position: relative;
+  width: 100%; max-width: 420px;
+  max-height: 88vh; overflow-y: auto;
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px 20px 16px;
+  box-shadow: var(--shadow-lg);
+  animation: fbIn .2s ease;
+}
+@keyframes fbIn { from { opacity: 0; transform: translateY(10px) scale(.99); } to { opacity: 1; transform: none; } }
+
+.fb-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.fb-head h3 { margin: 0; font-size: 16px; font-weight: 650; color: var(--ink); }
+.fb-x {
+  width: 28px; height: 28px; border-radius: 8px;
+  border: 0; background: #f4f7fb; color: var(--muted);
+  font-size: 17px; line-height: 1; cursor: pointer;
+}
+.fb-x:hover { background: #eaeff7; }
+
+.fb-field { display: block; margin-bottom: 13px; }
+.fb-label { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 550; color: var(--ink-2); }
+.fb-label em { font-style: normal; font-weight: 400; color: var(--faint); margin-left: 4px; }
+
+.fb-types { display: flex; flex-wrap: wrap; gap: 7px; }
+.fb-type {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 12px; color: var(--ink-2);
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.fb-type[aria-pressed="true"] {
+  background: var(--brand-soft);
+  border-color: #ffc9c4;
+  color: var(--brand-dark);
+  font-weight: 600;
+}
+
+.fb-field select, .fb-field textarea, .fb-field input {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fbfcfe;
+  font: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.fb-field select:focus, .fb-field textarea:focus, .fb-field input:focus {
+  border-color: #ffb3ac;
+  box-shadow: 0 0 0 3px rgba(225, 37, 27, .1);
+  background: #fff;
+}
+.fb-field textarea { resize: vertical; min-height: 72px; line-height: 1.55; }
+
+.fb-hint { min-height: 16px; margin: 0 0 10px; font-size: 12px; color: var(--brand); }
+.fb-hint.ok { color: #0b8f4d; }
+
+.fb-actions { display: flex; gap: 9px; }
+.fb-cancel, .fb-submit {
+  flex: 1; height: 40px;
+  border-radius: 10px;
+  font-size: 13px; font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.fb-cancel { background: #fff; color: var(--ink-2); border-color: var(--line); }
+.fb-cancel:hover { background: #f4f7fb; }
+.fb-submit { background: #0f9d58; color: #fff; }
+.fb-submit:hover { background: #0b8549; }
+.fb-submit[disabled] { opacity: .6; cursor: default; }
+
+@media (max-width: 720px) {
+  .pkg-main { flex-wrap: wrap; row-gap: 3px; }
+  .pkg-hits { font-size: 10px; }
+  .fb-card { padding: 16px 15px 13px; border-radius: 14px; }
 }
