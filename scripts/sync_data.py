@@ -64,7 +64,7 @@ MANUAL_APPS = [
         "owner": "何晋",
         "packages": [
             {
-                "scenario": "c8",
+                "scenario": "c4",
                 "file": "zhilai_v6.9.6.apk",
                 "url": ("https://common.fcbox.com/cdn/frontApk/ops/zhilai/"
                         "zhilai_v6.9.6.apk?v=6.9.6"),

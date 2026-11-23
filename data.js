@@ -677,7 +677,7 @@ window.FCBOXDATA = {
       "owner": "何晋",
       "packages": [
         {
-          "scenario": "c8",
+          "scenario": "c4",
           "file": "zhilai_v6.9.6.apk",
           "url": "https://common.fcbox.com/cdn/frontApk/ops/zhilai/zhilai_v6.9.6.apk?v=6.9.6",
           "version": "6.9.6",
@@ -708,6 +708,6 @@ window.FCBOXDATA = {
     "scenarios": 10,
     "packages": 76
   },
-  "updatedAt": "2026-11-23 16:36",
-  "digest": "ea939bd6e8fa"
+  "updatedAt": "2026-11-23 16:44",
+  "digest": "bfcdcd1db550"
 };
