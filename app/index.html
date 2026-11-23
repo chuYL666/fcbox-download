@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>丰巢软件清单 · 下载</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #f2f4f8; color: #1f2329; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+  }
+  .card {
+    background: #fff; width: 100%; max-width: 460px; border-radius: 18px;
+    padding: 34px 26px 26px; box-shadow: 0 10px 40px rgba(20, 32, 60, .08); text-align: center;
+  }
+  .logo {
+    width: 74px; height: 74px; margin: 0 auto 16px; border-radius: 20px;
+    background: linear-gradient(135deg, #ff7a18, #ff4d4f); color: #fff;
+    font-size: 30px; font-weight: 700; line-height: 74px; letter-spacing: -1px;
+    box-shadow: 0 6px 18px rgba(255, 90, 40, .3);
+  }
+  h1 { font-size: 21px; font-weight: 600; letter-spacing: .5px; }
+  .sub { margin-top: 7px; font-size: 13px; color: #86909c; line-height: 1.6; }
+  .meta {
+    margin: 20px 0 4px; background: #f7f8fa; border-radius: 12px; padding: 14px 16px; text-align: left;
+  }
+  .meta div { display: flex; justify-content: space-between; font-size: 13px; line-height: 2; }
+  .meta span:first-child { color: #86909c; }
+  .meta span:last-child { color: #1f2329; font-weight: 500; font-variant-numeric: tabular-nums; }
+  .btn {
+    display: block; margin-top: 20px; padding: 16px; border-radius: 12px;
+    background: linear-gradient(135deg, #ff7a18, #fa4b2b); color: #fff; text-decoration: none;
+    font-size: 17px; font-weight: 600; letter-spacing: .5px;
+    box-shadow: 0 8px 20px rgba(250, 75, 43, .28);
+  }
+  .btn:active { transform: translateY(1px); opacity: .92; }
+  .btn[aria-disabled="true"] { background: #c9cdd4; box-shadow: none; }
+  .hint { margin-top: 14px; font-size: 12px; color: #a9aeb8; line-height: 1.7; }
+  .qr { margin-top: 22px; padding-top: 20px; border-top: 1px solid #f0f1f4; }
+  .qr img { width: 132px; height: 132px; display: block; margin: 0 auto 8px; }
+  .qr p { font-size: 12px; color: #86909c; }
+  .mask {
+    position: fixed; inset: 0; background: rgba(0, 0, 0, .78); z-index: 99;
+    display: none; padding: 24px; color: #fff;
+  }
+  .mask.on { display: block; }
+  .mask .arrow { text-align: right; font-size: 40px; line-height: 1; margin-bottom: 14px; }
+  .mask .txt { background: rgba(255, 255, 255, .1); border-radius: 12px; padding: 18px; font-size: 15px; line-height: 1.9; }
+  .mask .txt b { color: #ffd666; }
+  .mask .close { margin-top: 18px; text-align: center; font-size: 14px; color: #c9cdd4; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #14151a; color: #e8eaee; }
+    .card { background: #1e1f26; box-shadow: 0 10px 40px rgba(0, 0, 0, .5); }
+    .meta { background: #26272f; }
+    .meta span:last-child { color: #e8eaee; }
+    .qr { border-top-color: #2a2b33; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">丰</div>
+  <h1>丰巢软件清单</h1>
+  <p class="sub">智能柜软件 · 驱动 · 固件聚合下载<br>装到柜机或手机上一次，全机型安装包随身带</p>
+
+  <div class="meta">
+    <div><span>版本</span><span id="ver">读取中…</span></div>
+    <div><span>大小</span><span id="size">—</span></div>
+    <div><span>更新</span><span id="date">—</span></div>
+    <div><span>系统</span><span>Android 4.0 及以上</span></div>
+  </div>
+
+  <a class="btn" id="dl" href="fcbox-catalog.apk" download>下载 APK</a>
+  <p class="hint">安装时若提示「未知来源」或风险应用，请选择<b>允许安装</b> / <b>继续安装</b></p>
+
+  <div class="qr">
+    <img src="qr.png" alt="扫码下载" width="132" height="132">
+    <p>手机扫码下载 · 固定链接长期有效</p>
+  </div>
+</div>
+
+<div class="mask" id="mask">
+  <div class="arrow">↗</div>
+  <div class="txt">
+    当前在<b>微信 / QQ</b> 中打开，无法直接下载 APK。<br>
+    请点右上角 <b>「···」</b> → 选择<b>「在浏览器打开」</b>，再点下载。
+  </div>
+  <div class="close" id="closeMask">我知道了</div>
+</div>
+
+<script>
+(function () {
+  var isWx = /MicroMessenger|QQ\//i.test(navigator.userAgent);
+  var mask = document.getElementById('mask');
+  var btn = document.getElementById('dl');
+
+  if (isWx) {
+    btn.addEventListener('click', function (e) { e.preventDefault(); mask.classList.add('on'); });
+    if (window.innerWidth < 900) mask.classList.add('on');
+  }
+  document.getElementById('closeMask').addEventListener('click', function () {
+    mask.classList.remove('on');
+  });
+
+  fetch('version.json?t=' + Date.now()).then(function (r) { return r.json(); }).then(function (v) {
+    document.getElementById('ver').textContent = 'v' + v.version;
+    document.getElementById('size').textContent = (v.size / 1048576).toFixed(1) + ' MB';
+    var d = new Date(v.updatedAt);
+    if (!isNaN(d)) {
+      document.getElementById('date').textContent =
+        d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+    }
+  }).catch(function () {
+    document.getElementById('ver').textContent = '最新版';
+  });
+})();
+</script>
+</body>
+</html>
