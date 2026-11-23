@@ -71,11 +71,18 @@ Pages 分支源为 `main`，根目录发布，推上去后约半分钟自动构�
 发版流程（在 `fcbox-catalog-app` 目录）：
 
 ```bash
-tools/build.sh 1.9.1     # 编译签名
-tools/publish.sh 1.9.1   # 覆盖 app/ 下的安装包 + 生成 version.json + 推送
+tools/sync.sh            # 重新生成内置清单 + 自动 +1 版本号 + 编译 + 覆盖 app/ + 推送
 ```
 
-`publish.sh` 只推 GitHub。要同步 WorkBuddy 域名，需在对话里重新发布一次本站。
+**站点数据更新后必须跑这一步**，否则 App 里那份离线清单还是旧的。详见该目录 README 的
+「站点更新后同步发版」。`sync.sh` 只推 GitHub；要同步 WorkBuddy 域名，需在对话里重新发布一次本站。
+
+单步命令（调试用）：
+
+```bash
+tools/build.sh 1.9.1     # 只编译签名
+tools/publish.sh 1.9.1   # 只覆盖 app/ 下的安装包 + 生成 version.json + 推送
+```
 
 ## 说明
 
