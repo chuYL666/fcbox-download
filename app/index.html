@@ -38,8 +38,9 @@
   .btn:active { transform: translateY(1px); opacity: .92; }
   .btn[aria-disabled="true"] { background: #c9cdd4; box-shadow: none; }
   .hint { margin-top: 14px; font-size: 12px; color: #a9aeb8; line-height: 1.7; }
+  .hint b { white-space: nowrap; color: #86909c; }
   .qr { margin-top: 22px; padding-top: 20px; border-top: 1px solid #f0f1f4; }
-  .qr img { width: 132px; height: 132px; display: block; margin: 0 auto 8px; }
+  .qr img { width: 148px; height: 148px; display: block; margin: 0 auto 10px; border-radius: 10px; background: #fff; }
   .qr p { font-size: 12px; color: #86909c; }
   .mask {
     position: fixed; inset: 0; background: rgba(0, 0, 0, .78); z-index: 99;
@@ -106,7 +107,9 @@
 
   fetch('version.json?t=' + Date.now()).then(function (r) { return r.json(); }).then(function (v) {
     document.getElementById('ver').textContent = 'v' + v.version;
-    document.getElementById('size').textContent = (v.size / 1048576).toFixed(1) + ' MB';
+    var kb = v.size / 1024;
+    document.getElementById('size').textContent =
+      kb < 1024 ? Math.round(kb) + ' KB' : (kb / 1024).toFixed(1) + ' MB';
     var d = new Date(v.updatedAt);
     if (!isNaN(d)) {
       document.getElementById('date').textContent =

@@ -55,6 +55,28 @@ Pages 分支源为 `main`，根目录发布，推上去后约半分钟自动构�
 - 云调用只允许在发布域名 `https://fcbox-apk-center.app.workbuddy.host` 下工作——服务端做 Origin 精确匹配，本地 `127.0.0.1` 预览或 GitHub Pages 镜像上计数/反馈会失效（属预期）。
 - 数据查看：`workbuddy_cloudservice_db_exec_sql`（`SELECT * FROM feedback ORDER BY id DESC`）。
 
+## App 客户端（固定下载地址）
+
+独立安卓 App「丰巢软件清单」安装包放在 `app/`，**文件名固定不变**，发新版本只覆盖内容，链接永久有效：
+
+| 用途 | 地址 |
+|---|---|
+| 下载页（推荐分享） | `/app/index.html` |
+| 直链 | `/app/fcbox-catalog.apk` |
+| 版本信息 | `/app/version.json` |
+
+- 线上：`https://fcbox-apk-center.app.workbuddy.host/app/index.html?sharecode=53XWPMSNJ2`
+- 镜像：`https://chuyl666.github.io/fcbox-download/app/`
+
+发版流程（在 `fcbox-catalog-app` 目录）：
+
+```bash
+tools/build.sh 1.9.1     # 编译签名
+tools/publish.sh 1.9.1   # 覆盖 app/ 下的安装包 + 生成 version.json + 推送
+```
+
+`publish.sh` 只推 GitHub。要同步 WorkBuddy 域名，需在对话里重新发布一次本站。
+
 ## 说明
 
 - 页面按「场景」筛选项 + 关键词搜索定位到对应柜型的安装包列表
