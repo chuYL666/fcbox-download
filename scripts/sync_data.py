@@ -97,7 +97,7 @@ def wecom_bin():
 def fetch_cells():
     """调用 wecom-cli 拉取表格单元格。"""
     cmd = [wecom_bin(), "sheet", "cells", "get",
-           "--docid", DOC_ID,
+           "--set", "docid=%s" % DOC_ID,
            "--set", "sheet=%s" % SHEET,
            "--set", "range=%s" % RANGE]
     proc = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8",

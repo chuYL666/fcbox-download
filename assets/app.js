@@ -251,10 +251,10 @@
       '<span class="pkg-actions">' +
         (noLink
           ? '<span class="icon-btn" title="原表未填链接" style="cursor:default">—</span>'
-          : '<a class="dl-btn" href="' + esc(p.url) + '" download target="_blank" rel="noopener" ' +
-            'data-copy="' + esc(p.url) + '" data-file="' + esc(p.file) + '">' + ICONS.dl + '下载</a>' +
-            '<button class="icon-btn js-copy" type="button" data-copy="' + esc(p.url) +
-            '" title="复制下载链接" aria-label="复制链接">' + ICONS.copy + '</button>') +
+          : '<button class="cp-btn js-copy" type="button" data-copy="' + esc(p.url) +
+            '" title="复制下载链接" aria-label="复制下载链接">' + ICONS.copy + '复制</button>' +
+            '<a class="dl-btn" href="' + esc(p.url) + '" download target="_blank" rel="noopener" ' +
+            'data-copy="' + esc(p.url) + '" data-file="' + esc(p.file) + '">' + ICONS.dl + '下载</a>') +
       '</span>' +
     '</div>';
   }
@@ -357,11 +357,11 @@
         '</div>' +
         '<span class="extra-actions">' +
           '<span class="pkg-hits" hidden></span>' +
+          '<button class="cp-btn js-copy" type="button" data-copy="' + esc(e.url) +
+            '" title="复制下载链接" aria-label="复制下载链接">' + ICONS.copy + '复制</button>' +
           '<a class="dl-btn" href="' + esc(e.url) + '" download target="_blank" rel="noopener" ' +
             'data-file="' + esc(e.file) + '" data-copy="' + esc(e.url) + '">' +
             ICONS.dl + '下载</a>' +
-          '<button class="icon-btn js-copy" type="button" data-copy="' + esc(e.url) +
-            '" title="复制下载链接" aria-label="复制下载链接">' + ICONS.copy + '</button>' +
         '</span>' +
       '</div>';
     }).join('');

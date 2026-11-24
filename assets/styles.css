@@ -529,6 +529,24 @@ button { font-family: inherit; cursor: pointer; }
 .icon-btn svg { width: 14px; height: 14px; }
 .icon-btn:hover { background: #f1f4f9; color: var(--ink-2); border-color: var(--line); }
 
+/* 复制下载直链：放在下载按钮左侧的次要操作，白底描边，与主按钮区分 */
+.cp-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 5px 9px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;          /* button 不继承父级行高，手动对齐下载按钮的高度 */
+  white-space: nowrap;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.cp-btn svg { width: 13px; height: 13px; }
+.cp-btn:hover { background: #f6f9fc; border-color: #c9d8ea; color: var(--ink); }
+.cp-btn:active { background: #eef3f9; }
+
 .pkg.inherited .pkg-file { color: var(--ink-2); }
 
 .more-btn {
@@ -728,8 +746,10 @@ button { font-family: inherit; cursor: pointer; }
   }
   .pkg-main { grid-area: file; }
   .pkg-file { font-size: 12.5px; }
-  .pkg-actions { grid-area: actions; }
+  .pkg-actions { grid-area: actions; gap: 6px; }
   .dl-btn { padding: 8px 14px; font-size: 12.5px; min-height: 36px; border-radius: 9px; }
+  .cp-btn { padding: 8px 11px; font-size: 12.5px; min-height: 38px; border-radius: 9px; }
+  .cp-btn svg { width: 13px; height: 13px; }
   .icon-btn { width: 36px; height: 36px; }
   .more-btn { min-height: 44px; font-size: 12.5px; }
 
