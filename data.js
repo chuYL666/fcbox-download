@@ -698,6 +698,11 @@ window.FCBOXDATA = {
       "url": "http://common.fcbox.com/cdn/frontApk/ops/fc-ivms4500.apk"
     },
     {
+      "label": "飞思保活程序",
+      "file": "LteKeepAlive_v1.0.7.apk",
+      "url": "https://fchibox-1251779293.cos.ap-guangzhou.myqcloud.com/factory/fcbox/LteKeepAlive_v1.0.7.apk"
+    },
+    {
       "label": "ES 文件浏览器",
       "file": "EsFileBrowser.apk",
       "url": "https://fchibox-1251779293.cos.ap-guangzhou.myqcloud.com/factory/EsFileBrowser.apk"
@@ -708,6 +713,6 @@ window.FCBOXDATA = {
     "scenarios": 10,
     "packages": 76
   },
-  "updatedAt": "2026-11-24 17:29",
-  "digest": "bfcdcd1db550"
+  "updatedAt": "2026-11-24 18:21",
+  "digest": "842ed590de45"
 };

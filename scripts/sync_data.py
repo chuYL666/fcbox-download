@@ -34,6 +34,12 @@ TZ = timezone(timedelta(hours=8))
 # 源文档里没有、但现场需要用到的手工维护条目（每次同步都会保留）
 MANUAL_EXTRAS = [
     {
+        "label": "飞思保活程序",
+        "file": "LteKeepAlive_v1.0.7.apk",
+        "url": ("https://fchibox-1251779293.cos.ap-guangzhou.myqcloud.com"
+                "/factory/fcbox/LteKeepAlive_v1.0.7.apk"),
+    },
+    {
         "label": "ES 文件浏览器",
         "file": "EsFileBrowser.apk",
         "url": ("https://fchibox-1251779293.cos.ap-guangzhou.myqcloud.com"
