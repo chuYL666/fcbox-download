@@ -1,10 +1,10 @@
 {
   "name": "丰巢软件清单",
   "package": "com.fcbox.apkcatalog",
-  "version": "1.9.6",
-  "versionCode": "17",
-  "size": 39673,
-  "md5": "c8a09b5d6aa96c17c2884adf4850dfb0",
-  "updatedAt": "2026-11-24T17:49:48+08:00",
+  "version": "1.9.7",
+  "versionCode": "18",
+  "size": 40326,
+  "md5": "0fe461b1570a6ae0edc2df41b836097a",
+  "updatedAt": "2026-11-24T18:04:58+08:00",
   "url": "app/fcbox-catalog.apk"
 }
