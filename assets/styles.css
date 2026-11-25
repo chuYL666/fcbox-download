@@ -5,6 +5,7 @@
 :root {
   --bg: #f5f7fa;
   --card: #ffffff;
+  --card-2: #f7f9fc;
   --ink: #0e1626;
   --ink-2: #38465c;
   --muted: #6d7c92;
@@ -122,7 +123,7 @@ button { font-family: inherit; cursor: pointer; }
   padding: 7px 12px;
   border-radius: 9px;
   border: 1px solid var(--line);
-  background: #fff;
+  background: var(--card);
   color: var(--ink-2);
   font-size: 12.5px;
   font-weight: 500;
@@ -130,7 +131,7 @@ button { font-family: inherit; cursor: pointer; }
   white-space: nowrap;
 }
 .ghost-btn svg { width: 14px; height: 14px; opacity: .7; }
-.ghost-btn:hover { border-color: #cfd8e6; color: var(--ink); background: #fbfcfe; }
+.ghost-btn:hover { border-color: #cfd8e6; color: var(--ink); background: var(--card-2); }
 .ghost-btn:active { transform: translateY(1px); }
 
 /* ------------------------------------------------------------------ page */
@@ -162,7 +163,7 @@ button { font-family: inherit; cursor: pointer; }
   position: relative;
   display: flex; align-items: baseline; gap: 8px;
   padding: 10px 16px 10px 18px;
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--line);
   border-radius: 12px;
   box-shadow: var(--shadow-sm);
@@ -249,7 +250,7 @@ button { font-family: inherit; cursor: pointer; }
   display: flex; align-items: center; gap: 11px;
   padding: 0 18px;
   height: 54px;
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--line);
   border-radius: 14px;
   box-shadow: var(--shadow-sm);
@@ -302,7 +303,7 @@ button { font-family: inherit; cursor: pointer; }
 .chip {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 6px 12px;
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--line);
   border-radius: 999px;
   font-size: 12.5px;
@@ -310,7 +311,7 @@ button { font-family: inherit; cursor: pointer; }
   transition: all .15s ease;
   white-space: nowrap;
 }
-.chip:hover { border-color: #cbd6e6; background: #fbfcfe; }
+.chip:hover { border-color: #cbd6e6; background: var(--card-2); }
 .chip[data-scene]::before {
   content: "";
   width: 6px; height: 6px;
@@ -361,7 +362,7 @@ button { font-family: inherit; cursor: pointer; }
   margin: 22px 0 0;
   display: flex; align-items: center; gap: 12px;
   padding: 13px 16px;
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--line);
   border-left: 3px solid var(--brand);
   border-radius: 10px;
@@ -415,7 +416,7 @@ button { font-family: inherit; cursor: pointer; }
   width: 40px; height: 40px; flex: none;
   display: grid; place-items: center;
   border-radius: 11px;
-  background: #fff;
+  background: var(--card);
   color: var(--accent, var(--brand-dark));
   border: 1px solid var(--accent-line, #ffe0dc);
   box-shadow: 0 2px 6px -4px color-mix(in srgb, var(--accent, #e1251b) 70%, transparent);
@@ -446,7 +447,7 @@ button { font-family: inherit; cursor: pointer; }
   line-height: 1.5;
 }
 
-.pkgs { border-top: 1px solid var(--accent-line, var(--line-2)); background: #fff; }
+.pkgs { border-top: 1px solid var(--accent-line, var(--line-2)); background: var(--card); }
 
 .pkg {
   display: grid;
@@ -531,14 +532,14 @@ button { font-family: inherit; cursor: pointer; }
   transition: all .15s;
 }
 .icon-btn svg { width: 14px; height: 14px; }
-.icon-btn:hover { background: #f1f4f9; color: var(--ink-2); border-color: var(--line); }
+.icon-btn:hover { background: var(--card-2); color: var(--ink-2); border-color: var(--line); }
 
 /* 复制下载直链：放在下载按钮左侧的次要操作，白底描边，与主按钮区分 */
 .cp-btn {
   display: inline-flex; align-items: center; gap: 4px;
   padding: 5px 9px;
   border-radius: 8px;
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--line);
   color: var(--ink-2);
   font-size: 12px;
@@ -548,8 +549,8 @@ button { font-family: inherit; cursor: pointer; }
   transition: background .15s, border-color .15s, color .15s;
 }
 .cp-btn svg { width: 13px; height: 13px; }
-.cp-btn:hover { background: #f6f9fc; border-color: #c9d8ea; color: var(--ink); }
-.cp-btn:active { background: #eef3f9; }
+.cp-btn:hover { background: var(--card-2); border-color: #c9d8ea; color: var(--ink); }
+.cp-btn:active { background: var(--card-2); }
 
 .pkg.inherited .pkg-file { color: var(--ink-2); }
 
@@ -558,7 +559,7 @@ button { font-family: inherit; cursor: pointer; }
   padding: 10px;
   border: 0;
   border-top: 1px solid var(--line-2);
-  background: #fcfdff;
+  background: var(--card);
   color: var(--muted);
   font-size: 12px;
   font-weight: 500;
@@ -576,7 +577,7 @@ button { font-family: inherit; cursor: pointer; }
   font-size: 12.5px;
   color: var(--faint);
   border-top: 1px solid var(--accent-line, var(--line-2));
-  background: #fff;
+  background: var(--card);
 }
 
 /* ---------------------------------------------------------------- extras */
@@ -615,8 +616,8 @@ button { font-family: inherit; cursor: pointer; }
 }
 .extra-actions { display: flex; align-items: center; gap: 6px; flex: none; }
 .extra-card .icon-btn { width: 30px; height: 30px; border-radius: 8px; color: var(--muted); }
-.extra-card .icon-btn:active { background: #fff; color: var(--accent, var(--brand)); }
-.extra-card .icon-btn:hover { background: #fff; border-color: var(--accent-line, var(--line)); color: var(--ink-2); }
+.extra-card .icon-btn:active { background: var(--card); color: var(--accent, var(--brand)); }
+.extra-card .icon-btn:hover { background: var(--card); border-color: var(--accent-line, var(--line)); color: var(--ink-2); }
 .extra-card .card-name { font-size: 14px; }
 .extra-card .card-desc { font-family: var(--mono); font-size: 11px; }
 
@@ -674,7 +675,7 @@ button { font-family: inherit; cursor: pointer; }
   padding: 64px 20px;
   text-align: center;
   color: var(--faint);
-  background: #fff;
+  background: var(--card);
   border: 1px dashed #dbe3ef;
   border-radius: var(--radius);
 }
@@ -797,7 +798,7 @@ button { font-family: inherit; cursor: pointer; }
   padding: 5px 11px;
   border-radius: 999px;
   border: 1px solid #f0cf8d;
-  background: #fff;
+  background: var(--card);
   color: #9a6206;
   font-size: 11.5px;
   font-weight: 550;
@@ -813,7 +814,7 @@ button { font-family: inherit; cursor: pointer; }
   z-index: 1;
   width: min(340px, calc(100vw - 48px));
   padding: 22px 20px 18px;
-  background: #fff;
+  background: var(--card);
   border-radius: 18px;
   box-shadow: 0 24px 60px -18px rgba(6, 12, 24, .55);
   text-align: center;
@@ -850,7 +851,7 @@ button { font-family: inherit; cursor: pointer; }
 .wx-guide-steps {
   margin: 12px 0 0;
   padding: 12px 14px 12px 30px;
-  background: #f7f9fc;
+  background: var(--card-2);
   border-radius: 11px;
   text-align: left;
   font-size: 12.5px;
@@ -878,8 +879,8 @@ button { font-family: inherit; cursor: pointer; }
 }
 .wx-guide-copy { background: #0f9d58; color: #fff; }
 .wx-guide-copy:active { background: #0b8549; }
-.wx-guide-close { background: #fff; color: var(--ink-2); border-color: var(--line); }
-.wx-guide-close:active { background: #f4f7fb; }
+.wx-guide-close { background: var(--card); color: var(--ink-2); border-color: var(--line); }
+.wx-guide-close:active { background: var(--card-2); }
 
 @media (max-width: 720px) {
   .wx-bar { padding: 9px 14px; gap: 8px; font-size: 12px; flex-wrap: wrap; row-gap: 6px; }
@@ -916,7 +917,7 @@ button { font-family: inherit; cursor: pointer; }
   white-space: nowrap;
   padding: 1px 6px;
   border-radius: 999px;
-  background: #f2f5fa;
+  background: var(--card-2);
   border: 1px solid var(--line);
 }
 
@@ -938,7 +939,7 @@ button { font-family: inherit; cursor: pointer; }
   position: relative;
   width: 100%; max-width: 420px;
   max-height: 88vh; overflow-y: auto;
-  background: #fff;
+  background: var(--card);
   border-radius: 16px;
   padding: 18px 20px 16px;
   box-shadow: var(--shadow-lg);
@@ -950,7 +951,7 @@ button { font-family: inherit; cursor: pointer; }
 .fb-head h3 { margin: 0; font-size: 16px; font-weight: 650; color: var(--ink); }
 .fb-x {
   width: 28px; height: 28px; border-radius: 8px;
-  border: 0; background: #f4f7fb; color: var(--muted);
+  border: 0; background: var(--card-2); color: var(--muted);
   font-size: 17px; line-height: 1; cursor: pointer;
 }
 .fb-x:hover { background: #eaeff7; }
@@ -964,7 +965,7 @@ button { font-family: inherit; cursor: pointer; }
   padding: 6px 12px;
   border-radius: 999px;
   border: 1px solid var(--line);
-  background: #fff;
+  background: var(--card);
   font-size: 12px; color: var(--ink-2);
   cursor: pointer;
   transition: background .15s, border-color .15s, color .15s;
@@ -981,7 +982,7 @@ button { font-family: inherit; cursor: pointer; }
   padding: 9px 11px;
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: #fbfcfe;
+  background: var(--card-2);
   font: inherit;
   font-size: 13px;
   color: var(--ink);
@@ -991,7 +992,7 @@ button { font-family: inherit; cursor: pointer; }
 .fb-field select:focus, .fb-field textarea:focus, .fb-field input:focus {
   border-color: #ffb3ac;
   box-shadow: 0 0 0 3px rgba(225, 37, 27, .1);
-  background: #fff;
+  background: var(--card);
 }
 .fb-field textarea { resize: vertical; min-height: 72px; line-height: 1.55; }
 
@@ -1006,8 +1007,8 @@ button { font-family: inherit; cursor: pointer; }
   border: 1px solid transparent;
   cursor: pointer;
 }
-.fb-cancel { background: #fff; color: var(--ink-2); border-color: var(--line); }
-.fb-cancel:hover { background: #f4f7fb; }
+.fb-cancel { background: var(--card); color: var(--ink-2); border-color: var(--line); }
+.fb-cancel:hover { background: var(--card-2); }
 .fb-submit { background: #0f9d58; color: #fff; }
 .fb-submit:hover { background: #0b8549; }
 .fb-submit[disabled] { opacity: .6; cursor: default; }
@@ -1061,7 +1062,7 @@ button { font-family: inherit; cursor: pointer; }
   font-family: var(--sans);
   font-size: 16px; letter-spacing: 2px;
   border: 1px solid #d7e1ae; border-radius: 8px;
-  background: #fff; color: #2a3500;
+  background: var(--card); color: #2a3500;
   -webkit-box-sizing: border-box; box-sizing: border-box;
   outline: none;
 }
@@ -1096,7 +1097,7 @@ button { font-family: inherit; cursor: pointer; }
 .auth .acp {
   position: absolute; right: 0; top: 30px;
   width: 60px; height: 32px; line-height: 30px; text-align: center;
-  border: 1px solid #cfdaa0; border-radius: 6px; background: #fff;
+  border: 1px solid #cfdaa0; border-radius: 6px; background: var(--card);
   color: #6b7c10; font-size: 12px; cursor: pointer;
   -webkit-box-sizing: border-box; box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -1165,4 +1166,68 @@ button { font-family: inherit; cursor: pointer; }
 
 @media (max-width: 720px) {
   .auth { margin-top: 14px; border-radius: 12px; }
+}
+
+/* ==========================================================================
+   深色模式：令牌换一套，组件结构不动。
+   场景卡片的强调色是内联 style 写的（--accent / --accent-soft），这里统一压暗，
+   避免大面积浅色贴片在夜间刺眼。
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b0f16;
+    --card: #141a24;
+    --card-2: #1a2230;
+    --ink: #e6ecf6;
+    --ink-2: #c3cddd;
+    --muted: #94a2b6;
+    --faint: #6e7c91;
+    --line: #232c3a;
+    --line-2: #1b2330;
+    --brand: #ff5f52;
+    --brand-dark: #ff7a6f;
+    --brand-soft: #2a1715;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .5);
+    --shadow-md: 0 8px 24px -12px rgba(0, 0, 0, .7);
+    --shadow-lg: 0 18px 48px -20px rgba(0, 0, 0, .85);
+  }
+
+  body {
+    background-image:
+      radial-gradient(760px 340px at 12% -6%, rgba(255, 95, 82, .10), transparent 68%),
+      radial-gradient(680px 320px at 88% -10%, rgba(96, 145, 255, .10), transparent 70%),
+      radial-gradient(520px 300px at 62% 4%, rgba(255, 176, 60, .06), transparent 72%);
+  }
+
+  /* 顶栏本身是深色，深色模式下加一条细线跟页面分开 */
+  .topbar { border-bottom: 1px solid rgba(255, 255, 255, .07); }
+
+  /* 资产烧录授权：浅黄绿渐变 → 深橄榄 */
+  .auth {
+    background: -webkit-linear-gradient(160deg, #1b2113 0%, #151a10 100%);
+    background: linear-gradient(160deg, #1b2113 0%, #151a10 100%);
+    border-color: #333c22;
+  }
+  .auth .at { color: #d7e9a8; }
+  .auth .akey { background: rgba(255, 255, 255, .06); border-color: #464f30; color: #cbe08f; }
+  .auth .aarr { border-top-color: #9fb36a; }
+  .auth .aarr.on { border-bottom-color: #9fb36a; }
+  .auth .aout { background: #12160d; }
+  .auth .alab { color: #9fb36a; }
+  .auth .atk { color: #d7e9a8; }
+  .auth .ain { background: #12160d; color: var(--ink); border-color: #4b5a2c; }
+  .auth .abtn { color: #22300c; }
+  .auth .acp { background: rgba(255, 255, 255, .06); border-color: #4b5a2c; color: #cbe08f; }
+
+  /* 微信提示条是浅黄，深色下改成深琥珀 */
+  .wx-bar { background: #2a2011; color: #f0d9a8; border-color: #3d2f18; }
+  .wx-bar-btn { background: rgba(255, 255, 255, .08); color: #f0d9a8; border-color: #4a3a20; }
+
+  /* 场景卡片的浅色强调底压暗一档，文字仍用强调色 */
+  .card { border-color: var(--line); }
+  .card .card-head, .card .head { background: var(--card-2); }
+  .pkgs { background: var(--card); }
+
+  /* 弹窗遮罩更深一点，深色下才有层级 */
+  .fb-mask, .wx-guide-mask { background: rgba(0, 0, 0, .68); }
 }
