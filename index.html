@@ -10,7 +10,7 @@
 <title>智能柜软件清单 · 下载站</title>
 <meta name="description" content="丰巢智能柜各柜型 / 场景的软件安装包（APK）可视化下载页，数据自动同步自企业微信《丰巢智能柜软件应用清单》文档。">
 <link rel="preconnect" href="https://fchibox-1251779293.file.myqcloud.com">
-<link rel="stylesheet" href="./assets/styles.css?v=20261125153024">
+<link rel="stylesheet" href="./assets/styles.css?v=20261125154700">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23e1251b'/%3E%3Cpath d='M9 11h14v13H9z' fill='%23fff' opacity='.95'/%3E%3Cpath d='M9 11h14v4H9z' fill='%230c1220' opacity='.25'/%3E%3Cpath d='M12 8h8v3h-8z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -118,7 +118,8 @@
     <div class="foot-meta">
       <span id="footSync">—</span>
       <span id="footHits" hidden></span>
-      <a id="footSource" href="#" target="_blank" rel="noopener">查看源文档 →</a>
+      <!-- 「查看源文档」已按要求隐藏；要恢复把下面的 hidden 去掉即可 -->
+      <a id="footSource" href="#" target="_blank" rel="noopener" hidden>查看源文档 →</a>
       <button class="foot-report" id="reportBtn" type="button">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v5"></path><path d="M12 16.5v.5"></path><circle cx="12" cy="12" r="8.5"></circle></svg>
         反馈问题
@@ -186,10 +187,10 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="./data.js?v=20261125153024" defer></script>
-<script src="./assets/cloud.js?v=20261125153024" defer></script>
-<script src="./assets/auth.js?v=20261125153024" defer></script>
-<script src="./assets/app.js?v=20261125153024" defer></script>
+<script src="./data.js?v=20261125154700" defer></script>
+<script src="./assets/cloud.js?v=20261125154700" defer></script>
+<script src="./assets/auth.js?v=20261125154700" defer></script>
+<script src="./assets/app.js?v=20261125154700" defer></script>
 <script>
 /* 微信内置浏览器（X5 / WKWebView）会把整页 HTML 缓存很久，发版后经常还是旧页面。
    这里比对线上 build.json：和上次看到的构建号不同，就带 _b= 参数重载一次强制回源。

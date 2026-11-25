@@ -733,7 +733,7 @@
       els.heroMeta.textContent = '数据更新于 ' + stamp;
     }
     els.footSync.textContent = '最后同步 ' + stamp;
-    if (DATA.source) {
+    if (DATA.source && els.footSource) {
       els.footSource.href = DATA.source.url;
     }
     document.title = '智能柜软件清单 · 下载站（' + stamp + '）';
