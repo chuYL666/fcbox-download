@@ -1013,3 +1013,152 @@ button { font-family: inherit; cursor: pointer; }
   .pkg-hits { font-size: 10px; }
   .fb-card { padding: 16px 15px 13px; border-radius: 14px; }
 }
+
+/* ------------------------------------------------------ 资产烧录授权卡片 */
+/* 与 App 内置页同一套界面和算法：米黄底 + 橄榄绿，和红色清单区一眼分开。
+   全部本地计算（HMAC-SHA1），不联网，断网也能出密码。 */
+.auth {
+  margin: 22px 0 2px;
+  background: -webkit-linear-gradient(160deg, #f9fcdd 0%, #edf3cf 100%);
+  background: linear-gradient(160deg, #f9fcdd 0%, #edf3cf 100%);
+  border: 1px solid #dde5bb;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.auth .ahd {
+  position: relative;
+  padding: 11px 42px 11px 14px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.auth .at { font-size: 15px; font-weight: 600; color: #4d5c07; }
+.auth .akey {
+  display: inline-block; margin-left: 8px; padding: 2px 8px;
+  border: 1px solid #d8e2a8; border-radius: 10px;
+  background: rgba(255, 255, 255, .62); color: #7d8c1c; font-size: 11px;
+  cursor: pointer;
+}
+.auth .aarr {
+  position: absolute; right: 16px; top: 17px;
+  width: 0; height: 0; font-size: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 7px solid #93a233;
+}
+.auth.on .aarr { top: 14px; border-top: 0; border-bottom: 7px solid #93a233; }
+.auth .abd { display: none; padding: 0 14px 13px; }
+.auth.on .abd { display: block; }
+.auth .arow { position: relative; padding-right: 112px; }
+.auth .ain {
+  width: 100%; height: 42px; padding: 0 12px;
+  font-family: var(--sans);
+  font-size: 16px; letter-spacing: 2px;
+  border: 1px solid #d7e1ae; border-radius: 8px;
+  background: #fff; color: #2a3500;
+  -webkit-box-sizing: border-box; box-sizing: border-box;
+  outline: none;
+}
+.auth .ain:focus { border-color: #b9cb63; box-shadow: 0 0 0 3px rgba(185, 203, 99, .22); }
+.auth .ain::-webkit-input-placeholder { color: #b3bf87; letter-spacing: 0; font-size: 13px; }
+.auth .ain::placeholder { color: #b3bf87; letter-spacing: 0; font-size: 13px; }
+.auth .abtn {
+  position: absolute; right: 0; top: 0;
+  width: 102px; height: 42px; line-height: 42px; text-align: center;
+  border-radius: 8px; background: #cfdd4a; color: #2a3500;
+  font-size: 15px; font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.auth .abtn.on { background: #c3d922; }
+.auth .abtn:hover { background: #c3d922; }
+.auth .abtn:active { opacity: .82; }
+.auth .aout { position: relative; padding: 14px 62px 0 0; }
+.auth .alab { font-size: 11px; color: #93a33f; letter-spacing: 1px; }
+.auth .atk {
+  padding-top: 1px; min-height: 34px;
+  font-family: var(--mono);
+  font-size: 26px; font-weight: 700; letter-spacing: 6px;
+  line-height: 1.3; color: #47560a;
+  cursor: pointer;
+  -webkit-user-select: text;
+  user-select: text;
+}
+.auth .atk.idle { color: #c3cda0; letter-spacing: 4px; cursor: default; }
+.auth .alft { min-height: 15px; padding-top: 2px; font-size: 11px; color: #93a33f; }
+.auth .alft.warn { color: #c9770a; }
+.auth .acp {
+  position: absolute; right: 0; top: 30px;
+  width: 60px; height: 32px; line-height: 30px; text-align: center;
+  border: 1px solid #cfdaa0; border-radius: 6px; background: #fff;
+  color: #6b7c10; font-size: 12px; cursor: pointer;
+  -webkit-box-sizing: border-box; box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.auth .acp:active { background: #f1f6d6; }
+.auth .acp.on { background: #f1f6d6; border-color: #b9cb63; color: #5b6b00; }
+
+@media (min-width: 700px) {
+  .auth .ahd { padding: 14px 52px 14px 18px; }
+  .auth .at { font-size: 18px; }
+  .auth .akey { font-size: 13px; padding: 3px 10px; margin-left: 10px; }
+  .auth .aarr { right: 20px; top: 22px; }
+  .auth.on .aarr { top: 18px; }
+  .auth .abd { padding: 0 18px 17px; }
+  .auth .arow { padding-right: 134px; }
+  .auth .ain { height: 50px; font-size: 19px; }
+  .auth .abtn { width: 122px; height: 50px; line-height: 50px; font-size: 17px; }
+  .auth .aout { padding: 14px 76px 0 0; }
+  .auth .alab, .auth .alft { font-size: 13px; }
+  .auth .atk { font-size: 34px; letter-spacing: 8px; min-height: 44px; }
+  .auth .acp { width: 70px; height: 36px; line-height: 34px; font-size: 14px; top: 34px; }
+  .auth .alft { min-height: 18px; }
+}
+
+@media (min-width: 1100px) {
+  /* 宽屏：账号输入在左、动态密码在右，一屏看得全 */
+  .auth .ahd { padding: 18px 62px 18px 22px; }
+  .auth .at { font-size: 21px; }
+  .auth .akey { font-size: 15px; padding: 4px 12px; }
+  .auth .aarr { right: 24px; top: 28px; border-left-width: 6px; border-right-width: 6px; border-top-width: 9px; }
+  .auth.on .aarr { top: 23px; border-bottom-width: 9px; }
+  /* 左右两列浮动：右列（密码 + 有效期）比左列高时容器会被撑开，
+     不会出现文字压到卡片下边缘之外；也不用给死 min-height */
+  .auth .abd { padding: 0 22px 20px; }
+  .auth .abd:after { content: ""; display: block; clear: both; }
+  .auth .arow {
+    float: left; width: 50%; padding-right: 170px;
+    -webkit-box-sizing: border-box; box-sizing: border-box;
+  }
+  .auth .ain { height: 60px; font-size: 22px; border-radius: 9px; }
+  .auth .abtn { width: 158px; height: 60px; line-height: 60px; font-size: 20px; border-radius: 9px; }
+  .auth .aout {
+    float: right; width: 47%;
+    padding: 0 92px 0 0; -webkit-box-sizing: border-box; box-sizing: border-box;
+  }
+  .auth .alab, .auth .alft { font-size: 15px; }
+  .auth .atk { font-size: 42px; letter-spacing: 10px; min-height: 50px; }
+  .auth .acp { width: 84px; height: 42px; line-height: 40px; font-size: 16px; top: 22px; }
+}
+
+@media (min-width: 1500px) {
+  .auth .ahd { padding: 22px 76px 22px 28px; }
+  .auth .at { font-size: 25px; }
+  .auth .akey { font-size: 18px; padding: 5px 14px; }
+  .auth .aarr { right: 30px; top: 34px; border-left-width: 7px; border-right-width: 7px; border-top-width: 11px; }
+  .auth.on .aarr { top: 28px; border-bottom-width: 11px; }
+  .auth .abd { padding: 0 28px 24px; }
+  .auth .arow { padding-right: 210px; }
+  .auth .ain { height: 70px; font-size: 26px; }
+  .auth .abtn { width: 196px; height: 70px; line-height: 70px; font-size: 24px; }
+  .auth .aout { padding: 0 108px 0 0; }
+  .auth .alab, .auth .alft { font-size: 18px; }
+  .auth .atk { font-size: 50px; letter-spacing: 12px; min-height: 60px; }
+  .auth .acp { width: 100px; height: 50px; line-height: 48px; font-size: 19px; top: 26px; }
+}
+
+@media (max-width: 720px) {
+  .auth { margin-top: 14px; border-radius: 12px; }
+}

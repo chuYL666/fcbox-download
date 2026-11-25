@@ -10,7 +10,7 @@
 <title>智能柜软件清单 · 下载站</title>
 <meta name="description" content="丰巢智能柜各柜型 / 场景的软件安装包（APK）可视化下载页，数据自动同步自企业微信《丰巢智能柜软件应用清单》文档。">
 <link rel="preconnect" href="https://fchibox-1251779293.file.myqcloud.com">
-<link rel="stylesheet" href="./assets/styles.css?v=20261124174000">
+<link rel="stylesheet" href="./assets/styles.css?v=20261125151600">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23e1251b'/%3E%3Cpath d='M9 11h14v13H9z' fill='%23fff' opacity='.95'/%3E%3Cpath d='M9 11h14v4H9z' fill='%230c1220' opacity='.25'/%3E%3Cpath d='M12 8h8v3h-8z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -50,6 +50,27 @@
 </div>
 
 <main class="page">
+
+  <section class="auth on" id="auth">
+    <div class="ahd" onclick="authToggle()">
+      <span class="at">资产烧录授权</span>
+      <span class="akey" id="akey" onclick="authKeyCopy(event)">DATEKEY</span>
+      <i class="aarr"></i>
+    </div>
+    <div class="abd">
+      <div class="arow">
+        <input class="ain" id="acode" type="tel" maxlength="8" placeholder="请输入 8 位账号"
+               oninput="authInput()" onkeydown="if(event.keyCode==13)authGen()">
+        <span class="abtn" id="abtn" onclick="authGen()">生成密码</span>
+      </div>
+      <div class="aout">
+        <div class="alab">动态密码</div>
+        <div class="atk idle" id="atok" onclick="authCopy(event)">------</div>
+        <div class="alft" id="alft"></div>
+        <span class="acp" id="acp" onclick="authCopy(event)">复制</span>
+      </div>
+    </div>
+  </section>
 
   <section class="hero">
     <h1>智能柜软件清单</h1>
@@ -167,6 +188,7 @@
 
 <script src="./data.js?v=20261124182100" defer></script>
 <script src="./assets/cloud.js?v=20261123164500" defer></script>
+<script src="./assets/auth.js?v=20261125151600" defer></script>
 <script src="./assets/app.js?v=20261124174000" defer></script>
 </body>
 </html>

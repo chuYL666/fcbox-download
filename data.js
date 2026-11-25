@@ -713,6 +713,6 @@ window.FCBOXDATA = {
     "scenarios": 10,
     "packages": 76
   },
-  "updatedAt": "2026-11-24 18:21",
+  "updatedAt": "2026-11-25 09:19",
   "digest": "842ed590de45"
 };
