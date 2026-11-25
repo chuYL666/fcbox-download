@@ -10,7 +10,7 @@
 <title>智能柜软件清单 · 下载站</title>
 <meta name="description" content="丰巢智能柜各柜型 / 场景的软件安装包（APK）可视化下载页，数据自动同步自企业微信《丰巢智能柜软件应用清单》文档。">
 <link rel="preconnect" href="https://fchibox-1251779293.file.myqcloud.com">
-<link rel="stylesheet" href="./assets/styles.css?v=20261125152654">
+<link rel="stylesheet" href="./assets/styles.css?v=20261125153024">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23e1251b'/%3E%3Cpath d='M9 11h14v13H9z' fill='%23fff' opacity='.95'/%3E%3Cpath d='M9 11h14v4H9z' fill='%230c1220' opacity='.25'/%3E%3Cpath d='M12 8h8v3h-8z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -186,9 +186,37 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="./data.js?v=20261124182100" defer></script>
-<script src="./assets/cloud.js?v=20261123164500" defer></script>
-<script src="./assets/auth.js?v=20261125151600" defer></script>
-<script src="./assets/app.js?v=20261124174000" defer></script>
+<script src="./data.js?v=20261125153024" defer></script>
+<script src="./assets/cloud.js?v=20261125153024" defer></script>
+<script src="./assets/auth.js?v=20261125153024" defer></script>
+<script src="./assets/app.js?v=20261125153024" defer></script>
+<script>
+/* 微信内置浏览器（X5 / WKWebView）会把整页 HTML 缓存很久，发版后经常还是旧页面。
+   这里比对线上 build.json：和上次看到的构建号不同，就带 _b= 参数重载一次强制回源。
+   只在本页已经有 JS 时执行，失败静默（断网、隐私模式都不影响正常浏览）。 */
+(function () {
+  var KEY = 'fcbox.site.build';
+  try {
+    var x = new XMLHttpRequest();
+    x.open('GET', './build.json?t=' + String(new Date().getTime()), true);
+    x.onreadystatechange = function () {
+      if (x.readyState !== 4) return;
+      if (x.status !== 200) return;
+      var b;
+      try { b = JSON.parse(x.responseText).build; } catch (e) { return; }
+      if (!b) return;
+      var seen = null;
+      try { seen = localStorage.getItem(KEY); } catch (e) {}
+      if (seen === b) return;
+      try { localStorage.setItem(KEY, b); } catch (e) {}
+      if (!seen) return;                       /* 第一次来，不用重载 */
+      var href = location.href.replace(/([?&])_b=[^&#]*/g, '$1').replace(/[?&]$/, '');
+      var sep = href.indexOf('?') < 0 ? '?' : '&';
+      location.replace(href + sep + '_b=' + encodeURIComponent(b));
+    };
+    x.send();
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>

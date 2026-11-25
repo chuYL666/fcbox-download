@@ -6,12 +6,15 @@
 
 ```
 index.html            页面入口
+build.json            构建号（页面比对它判断是否被缓存了旧副本）
 data.js               构建产物：页面运行时读取的数据
 data/snapshot.json    数据快照（含下载链接、版本、适配机型）
 data/raw_gui.json     源数据原始记录
 scripts/sync_data.py  从源文档同步数据并生成 data.js
+scripts/stamp.py      发版前刷新 build.json 与 index.html 的 ?v= 号
 assets/styles.css     样式
 assets/app.js         交互逻辑（场景筛选、搜索、分组折叠、计数展示、反馈弹窗）
+assets/auth.js        资产烧录授权（HMAC-SHA1 动态密码，纯本地计算）
 assets/cloud.js       云服务接入层（下载计数 / 问题反馈，SDK 惰性加载）
 ```
 
@@ -29,6 +32,20 @@ python scripts/sync_data.py
 ```
 
 生成新的 `data.js` 后，记得同步更新 `index.html` 里 `data.js?v=` 的版本号，避免浏览器用缓存。
+
+## 发版（改完任何静态文件都跑一次）
+
+```bash
+python scripts/stamp.py     # 刷新 build.json + index.html 里所有 ?v= 号
+```
+
+微信内置浏览器（X5 / WKWebView）会把整页 HTML 缓存很久，托管又不给加 `Cache-Control`，
+所以 `index.html` 末尾有一段脚本：拿到 `build.json` 后和 localStorage 里上次的构建号对比，
+不一致就带 `_b=<构建号>` 参数重载一次，强制回源。**因此每次改完文件必须跑 `stamp.py`**，
+否则老访客会一直看到旧页面。
+
+仍被旧缓存卡住时（多见于改动前的存量副本），用带参数的地址打开一次即可：
+`https://fcbox-apk-center.app.workbuddy.host/?sharecode=53XWPMSNJ2&_b=1`，之后就会自愈。
 
 ## 推送
 

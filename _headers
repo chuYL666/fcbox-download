@@ -1,0 +1,12 @@
+# 让微信内置浏览器/X5 每次都回源校验，避免发版后仍显示旧页面
+/index.html
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+
+/
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+
+/*.html
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
