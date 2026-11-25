@@ -224,47 +224,55 @@ button { font-family: inherit; cursor: pointer; }
 .app-entry-tx { font-size: 12.5px; font-weight: 600; letter-spacing: .1px; color: #fff; }
 
 /* -------------------------------------------------------------- controls */
+/* 搜索行做成「一张卡片」：和下方 .card 用同一套圆角 / 描边 / 投影，
+   外层的 .controls 只负责吸顶，不再画那条半透明毛玻璃底栏——
+   滚动时毛玻璃会把后面的列表糊成一条灰带，看起来像块矩形压在页面上。 */
 .controls {
   position: sticky;
   top: 64px;
   z-index: 40;
   margin: 0 -28px;
-  padding: 14px 28px 16px;
-  background: rgba(245, 247, 250, .88);
-  backdrop-filter: saturate(150%) blur(10px);
-  border-bottom: 1px solid transparent;
-  transition: border-color .2s, box-shadow .2s;
+  padding: 0 28px 12px;
+  /* 吸顶时用页面底色整条盖住列表（跟背景同色，看不出边界）；
+     不能用毛玻璃，否则后面的卡片会被糊成一条灰带，看着像块矩形压在上面 */
+  background: var(--bg);
 }
-.controls.stuck {
-  border-bottom-color: var(--line);
-  box-shadow: 0 8px 20px -18px rgba(15, 26, 46, .5);
-}
+/* 兜底：贴顶时若浏览器仍画了底色/边线，这里统一清掉 */
+.controls.stuck { border-bottom-color: transparent; box-shadow: none; }
 
-/* 搜索框与「全部场景」永远同一行：不换行，宽度不够时由搜索框收缩 */
-.controls-row { display: flex; flex-wrap: nowrap; align-items: center; gap: 10px; }
+/* 搜索框与「全部场景」合成一张圆角卡，宽度不够时只收缩输入区 */
+.controls-row {
+  display: flex; flex-wrap: nowrap; align-items: center;
+  max-width: 640px;
+  padding: 5px 5px 5px 4px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color .16s, box-shadow .16s;
+}
+.controls-row:focus-within {
+  border-color: color-mix(in srgb, var(--brand) 42%, var(--line));
+  box-shadow: 0 0 0 4px rgba(225, 37, 27, .09), var(--shadow-sm);
+}
 
 .search {
   flex: 1 1 auto;
   min-width: 0;
-  max-width: 560px;
-  display: flex; align-items: center; gap: 11px;
-  padding: 0 18px;
-  height: 54px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  box-shadow: var(--shadow-sm);
-  transition: border-color .16s, box-shadow .16s;
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 12px 0 14px;
+  height: 46px;
+  background: transparent;
+  border: 0;
+  border-radius: 12px;
+  box-shadow: none;
 }
-.search:focus-within {
-  border-color: color-mix(in srgb, var(--brand) 45%, #cbd6e6);
-  box-shadow: 0 0 0 4px rgba(225, 37, 27, .09), var(--shadow-sm);
-}
-.search svg { width: 20px; height: 20px; color: var(--faint); flex: none; }
-.search:focus-within svg { color: var(--brand); }
+.search:focus-within { box-shadow: none; }
+.search svg { width: 19px; height: 19px; color: var(--faint); flex: none; }
+.controls-row:focus-within .search svg { color: var(--brand); }
 .search input {
   flex: 1; border: 0; outline: 0; background: transparent;
-  font-family: inherit; font-size: 16px; color: var(--ink);
+  font-family: inherit; font-size: 15px; color: var(--ink);
   min-width: 0;
 }
 .search input::placeholder { color: #9aa7ba; }
@@ -273,11 +281,11 @@ button { font-family: inherit; cursor: pointer; }
 #allChip {
   flex: none;
   height: 46px;
-  padding: 0 16px;
+  padding: 0 15px;
   font-size: 13px;
   font-weight: 600;
-  border-radius: 13px;
-  box-shadow: var(--shadow-sm);
+  border-radius: 12px;
+  box-shadow: none;
 }
 #allChip .n { font-size: 11px; }
 #allChip .caret { width: 13px; height: 13px; }
@@ -600,6 +608,7 @@ button { font-family: inherit; cursor: pointer; }
 
 .extra-card {
   display: flex; align-items: center; gap: 13px;
+  min-width: 0;
   padding: 15px 17px;
   background: var(--soft, #fff);
   border: 1px solid var(--accent-line, var(--line));
@@ -609,10 +618,14 @@ button { font-family: inherit; cursor: pointer; }
 }
 .extra-card:hover { box-shadow: var(--shadow-md); }
 .extra-card .card-titles { flex: 1; min-width: 0; }
+/* 文件名是这一栏的关键信息，手机上宁可占两行也别截成「…」（原来 nowrap 还会把卡片撑出屏幕） */
 .extra-card .card-desc {
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 .extra-actions { display: flex; align-items: center; gap: 6px; flex: none; }
 .extra-card .icon-btn { width: 30px; height: 30px; border-radius: 8px; color: var(--muted); }
@@ -706,14 +719,14 @@ button { font-family: inherit; cursor: pointer; }
   .stat b { font-size: 17px; }
   .stat span { font-size: 11px; white-space: nowrap; }
 
-  .controls { position: static; margin: 0 -14px; padding: 10px 14px 12px; }
+  .controls { position: static; margin: 0; padding: 6px 0 14px; background: none; }
   .controls.stuck { box-shadow: none; border-bottom-color: transparent; }
-  .controls-row { flex-wrap: nowrap; gap: 8px; }
-  .search { max-width: none; width: auto; flex: 1 1 auto; min-width: 0; height: 50px; padding: 0 14px; gap: 8px; border-radius: 13px; }
+  .controls-row { max-width: none; padding: 5px 5px 5px 3px; border-radius: 15px; }
+  .search { height: 46px; padding: 0 10px 0 13px; gap: 9px; }
   .search svg { width: 18px; height: 18px; }
   .search input { font-size: 16px; }
   .search input::placeholder { font-size: 13px; }
-  #allChip { height: 44px; padding: 0 13px; font-size: 12.5px; border-radius: 12px; }
+  #allChip { height: 46px; padding: 0 14px; font-size: 13px; border-radius: 12px; }
   #allChip .n { font-size: 10.5px; }
   #copySceneBtn { width: 100%; justify-content: center; height: 38px; font-size: 12.5px; margin-top: 10px; }
 
@@ -766,7 +779,8 @@ button { font-family: inherit; cursor: pointer; }
 
   .extras { margin-top: 32px; }
   .section-head { flex-wrap: wrap; row-gap: 2px; }
-  .extras-grid { grid-template-columns: 1fr; gap: 10px; }
+  /* minmax(0,…)：文件名是 nowrap，用 1fr 会让列宽按 min-content 撑破屏幕（右侧按钮被裁） */
+  .extras-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
 
   .foot { flex-direction: column; margin-top: 34px; gap: 16px; }
   .foot-meta { align-items: flex-start; }
@@ -1233,6 +1247,29 @@ button { font-family: inherit; cursor: pointer; }
   .card { border-color: var(--line); }
   .card .card-head, .card .head { background: var(--card-2); }
   .pkgs { background: var(--card); }
+
+  /* 配套工具卡片：底色来自内联的 --soft（浅色强调底），夜间会变成
+     浅底 + 浅字，几乎看不清。这里强制换成「深底 + 强调色微染」，
+     图标与描边同步提亮，保持 4 张卡片的颜色区分。 */
+  .extra-card {
+    background: var(--card-2);
+    background: color-mix(in srgb, var(--accent, #0891b2) 10%, #131a26);
+    border-color: var(--line);
+  }
+  .extra-card .card-name { color: #f3f7fd; }
+  .extra-card .card-desc { color: #9db0c8; }
+  .extra-card .card-icon {
+    background: rgba(255, 255, 255, .05);
+    border-color: var(--line);
+    color: var(--accent, #0891b2);
+    color: color-mix(in srgb, var(--accent, #0891b2) 55%, #ffffff);
+    box-shadow: none;
+  }
+  .extra-card .cp-btn { background: rgba(255, 255, 255, .06); border-color: var(--line); color: var(--ink-2); }
+  .extra-card .icon-btn:hover { background: rgba(255, 255, 255, .08); }
+
+  /* 搜索行卡片：靠 --card / --line 自动跟随，这里只把输入框占位色调暗一档 */
+  .search input::placeholder { color: #7f8ea4; }
 
   /* 弹窗遮罩更深一点，深色下才有层级 */
   .fb-mask, .wx-guide-mask { background: rgba(0, 0, 0, .68); }
