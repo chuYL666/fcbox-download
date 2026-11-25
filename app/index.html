@@ -37,6 +37,8 @@
   .btn[aria-disabled="true"] { background: #c9cdd4; box-shadow: none; }
   .hint { margin-top: 14px; font-size: 12px; color: #a9aeb8; line-height: 1.7; }
   .hint b { white-space: nowrap; color: #86909c; }
+  .alt { margin-top: 10px; font-size: 12px; color: #86909c; line-height: 1.7; }
+  .alt a { color: #fa4b2b; text-decoration: none; border-bottom: 1px dashed rgba(250, 75, 43, .45); padding-bottom: 1px; }
   .qr { margin-top: 22px; padding-top: 20px; border-top: 1px solid #f0f1f4; }
   .qr img { width: 148px; height: 148px; display: block; margin: 0 auto 10px; border-radius: 10px; background: #fff; }
   .qr p { font-size: 12px; color: #86909c; }
@@ -73,6 +75,7 @@
 
   <a class="btn" id="dl" href="fcbox-catalog.apk" download>下载 APK</a>
   <p class="hint">安装时若提示「未知来源」或风险应用，请选择<b>允许安装</b> / <b>继续安装</b></p>
+  <p class="alt" id="alt">下载失败或点了没反应？<a id="mir" href="https://chuyl666.github.io/fcbox-download/app/fcbox-catalog.apk">换备用线路</a></p>
 
   <div class="qr">
     <img src="qr.png" alt="扫码下载" width="132" height="132">
@@ -94,6 +97,17 @@
   var isWx = /MicroMessenger|QQ\//i.test(navigator.userAgent);
   var mask = document.getElementById('mask');
   var btn = document.getElementById('dl');
+
+  /* 本站网关不回 206（不支持断点续传），小米自带浏览器用的是多线程下载器，
+     遇到 200 全量响应会直接判失败。GitHub Pages 镜像支持 Range，给 MIUI 默认走镜像。 */
+  var MIRROR = 'https://chuyl666.github.io/fcbox-download/app/fcbox-catalog.apk';
+  var isMiui = /MiuiBrowser|XiaoMi\//i.test(navigator.userAgent);
+  if (isMiui) {
+    btn.href = MIRROR;
+    btn.textContent = '下载 APK（备用线路）';
+    document.getElementById('alt').innerHTML =
+      '已自动切到支持断点续传的线路；若仍失败，可长按复制链接到其他浏览器下载';
+  }
 
   if (isWx) {
     btn.addEventListener('click', function (e) { e.preventDefault(); mask.classList.add('on'); });
