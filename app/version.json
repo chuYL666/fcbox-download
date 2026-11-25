@@ -1,10 +1,10 @@
 {
-  "name": "丰巢软件清单",
+  "name": "运维软件助手",
   "package": "com.fcbox.apkcatalog",
-  "version": "1.9.9",
-  "versionCode": "20",
-  "size": 40453,
-  "md5": "479b75caeffee8581e1f9ac327079845",
-  "updatedAt": "2026-11-24T18:24:09+08:00",
+  "version": "1.9.10",
+  "versionCode": "21",
+  "size": 44555,
+  "md5": "2da77ffcf16ae332dc7ab4cb7405a402",
+  "updatedAt": "2026-11-25T14:53:49+08:00",
   "url": "app/fcbox-catalog.apk"
 }
