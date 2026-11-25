@@ -139,8 +139,6 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ------------------------------------------------------------------ hero */
 .hero { padding: 28px 0 26px; max-width: 760px; }
-/* 顶部小程序入口之后紧跟大标题，留白收一档，否则 16+28 会把首屏撑得太散 */
-.app-entry + .hero { padding-top: 18px; }
 
 .hero h1 {
   margin: 0;
@@ -188,40 +186,42 @@ button { font-family: inherit; cursor: pointer; }
 .hero-meta { display: none; margin: 10px 0 0; font-size: 12px; color: var(--faint); }
 
 /* -------------------------------------------------------------- app entry */
-/* 放在页面最顶端的一条轻量入口：高度控制在 50px 出头，不抢标题和清单的注意力 */
+/* 随身版入口：收进顶栏右上角，做成一颗紧凑胶囊，跟顶栏的其它 chip 同一套语汇，
+   不抢标题和清单的注意力；手机上顶栏只有 54px 高，这里高度压到 32px。 */
 .app-entry {
-  display: flex;
+  flex: none;
+  display: -webkit-inline-box;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  max-width: 400px;
-  margin: 16px 0 0;
-  padding: 8px 12px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  box-shadow: var(--shadow-sm);
-  text-decoration: none;
-  color: inherit;
-  transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease;
-}
-.app-entry:hover { box-shadow: var(--shadow-md); border-color: #f3cbc7; transform: translateY(-1px); }
-.app-entry-ic {
-  flex: 0 0 30px;
-  width: 30px;
-  height: 30px;
-  border-radius: 9px;
-  background: linear-gradient(135deg, #ff7a18, #e1251b);
+  gap: 7px;
+  height: 36px;
+  padding: 0 13px 0 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .09);
+  border: 1px solid rgba(255, 255, 255, .14);
   color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 3px 8px rgba(225, 37, 27, .22);
+  text-decoration: none;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  transition: background .16s ease, border-color .16s ease, transform .16s ease;
 }
-.app-entry-ic svg { width: 16px; height: 16px; }
-.app-entry-tx { flex: 1 1 auto; min-width: 0; }
-.app-entry-tx b { display: block; font-size: 13px; font-weight: 650; color: var(--ink); letter-spacing: -.1px; }
-.app-entry-tx i { display: block; margin-top: 1px; font-size: 11px; font-style: normal; color: var(--muted); line-height: 1.45; }
-.app-entry-go { flex: 0 0 auto; font-size: 12px; font-weight: 600; color: var(--brand); white-space: nowrap; }
+.app-entry:hover {
+  background: rgba(255, 255, 255, .16);
+  border-color: rgba(255, 255, 255, .3);
+  transform: translateY(-1px);
+}
+.app-entry:active { transform: translateY(0); }
+.app-entry-ic {
+  flex: 0 0 24px;
+  width: 24px; height: 24px;
+  display: grid; place-items: center;
+  border-radius: 7px;
+  background: linear-gradient(140deg, #ff7a18, #e1251b);
+  color: #fff;
+  box-shadow: 0 2px 7px -1px rgba(225, 37, 27, .7);
+}
+.app-entry-ic svg { width: 13px; height: 13px; }
+.app-entry-tx { font-size: 12.5px; font-weight: 600; letter-spacing: .1px; color: #fff; }
 
 /* -------------------------------------------------------------- controls */
 .controls {
@@ -690,6 +690,12 @@ button { font-family: inherit; cursor: pointer; }
   .brand-text strong { font-size: 13px; }
   .brand-text span { display: none; }
   .sync-chip { display: none; }
+  /* 顶栏 54px：入口胶囊再压一档，保证和左上角 logo 视觉重心齐平 */
+  .topbar-right { gap: 8px; }
+  .app-entry { height: 32px; padding: 0 11px 0 5px; gap: 6px; }
+  .app-entry-ic { flex-basis: 22px; width: 22px; height: 22px; border-radius: 6px; }
+  .app-entry-ic svg { width: 12px; height: 12px; }
+  .app-entry-tx { font-size: 12px; }
 
   .hero { padding: 18px 0 12px; max-width: none; }
   .hero h1 { font-size: 27px; letter-spacing: -.6px; }
