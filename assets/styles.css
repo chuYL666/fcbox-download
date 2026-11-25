@@ -236,7 +236,8 @@ button { font-family: inherit; cursor: pointer; }
   box-shadow: 0 8px 20px -18px rgba(15, 26, 46, .5);
 }
 
-.controls-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+/* 搜索框与「全部场景」永远同一行：不换行，宽度不够时由搜索框收缩 */
+.controls-row { display: flex; flex-wrap: nowrap; align-items: center; gap: 10px; }
 
 .search {
   flex: 1 1 auto;
@@ -697,7 +698,7 @@ button { font-family: inherit; cursor: pointer; }
 
   .controls { position: static; margin: 0 -14px; padding: 10px 14px 12px; }
   .controls.stuck { box-shadow: none; border-bottom-color: transparent; }
-  .controls-row { flex-wrap: wrap; gap: 8px; }
+  .controls-row { flex-wrap: nowrap; gap: 8px; }
   .search { max-width: none; width: auto; flex: 1 1 auto; min-width: 0; height: 50px; padding: 0 14px; gap: 8px; border-radius: 13px; }
   .search svg { width: 18px; height: 18px; }
   .search input { font-size: 16px; }
