@@ -1,10 +1,10 @@
 {
   "name": "运维软件助手",
   "package": "com.fcbox.apkcatalog",
-  "version": "1.9.12",
-  "versionCode": "23",
-  "size": 44709,
-  "md5": "0687a6a88f3345bc2f8a3d0f8974bca9",
-  "updatedAt": "2026-11-25T16:13:26+08:00",
+  "version": "1.9.13",
+  "versionCode": "24",
+  "size": 45786,
+  "md5": "54fd8d0eb5fb69b65083760421bc533b",
+  "updatedAt": "2026-11-25T16:19:50+08:00",
   "url": "app/fcbox-catalog.apk"
 }
