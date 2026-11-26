@@ -1,10 +1,10 @@
 {
   "name": "运维通",
   "package": "com.fcbox.apkcatalog",
-  "version": "1.9.35",
-  "versionCode": "46",
-  "size": 12808150,
-  "md5": "2449152e621f86499c2864f07cfc15f5",
-  "updatedAt": "2026-11-26T22:51:41+08:00",
+  "version": "1.9.36",
+  "versionCode": "47",
+  "size": 12808147,
+  "md5": "4414cb342c20337175ba02146b8e9ed9",
+  "updatedAt": "2026-11-27T00:19:02+08:00",
   "url": "app/fcbox-catalog.apk"
 }
