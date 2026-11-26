@@ -669,7 +669,7 @@
     var copyBtn = e.target.closest('.js-copy');
     if (copyBtn) {
       e.preventDefault();
-      copyText(copyBtn.dataset.copy, '下载链接已复制');
+      copyText(copyBtn.dataset.copy || '', '下载链接已复制');
       return;
     }
     var more = e.target.closest('.more-btn');
@@ -691,7 +691,7 @@
     var copyBtn = e.target.closest('.js-copy');
     if (!copyBtn) return;
     e.preventDefault();
-    copyText(copyBtn.dataset.copy, '下载链接已复制');
+    copyText(copyBtn.dataset.copy || '', '下载链接已复制');
   });
 
   els.copySceneBtn.addEventListener('click', function () {

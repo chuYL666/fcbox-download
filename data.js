@@ -679,7 +679,7 @@ window.FCBOXDATA = {
         {
           "scenario": "c4",
           "file": "zhilai_v6.9.6.apk",
-          "url": "https://common.fcbox.com/cdn/frontApk/ops/zhilai/zhilai_v6.9.6.apk?v=6.9.6",
+          "url": "https://common.fcbox.com/cdn/frontApk/ops/zhilai/zhilai_v6.9.6.apk",
           "version": "6.9.6",
           "inherited": false
         }
@@ -713,6 +713,6 @@ window.FCBOXDATA = {
     "scenarios": 10,
     "packages": 76
   },
-  "updatedAt": "2026-11-25 09:19",
-  "digest": "842ed590de45"
+  "updatedAt": "2026-11-26 09:08",
+  "digest": "195fe022c96e"
 };

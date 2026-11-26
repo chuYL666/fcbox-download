@@ -73,7 +73,7 @@ MANUAL_APPS = [
                 "scenario": "c4",
                 "file": "zhilai_v6.9.6.apk",
                 "url": ("https://common.fcbox.com/cdn/frontApk/ops/zhilai/"
-                        "zhilai_v6.9.6.apk?v=6.9.6"),
+                        "zhilai_v6.9.6.apk"),
                 "version": "6.9.6",
                 "inherited": False,
             },
