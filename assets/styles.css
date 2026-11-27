@@ -1260,3 +1260,14 @@ button { font-family: inherit; cursor: pointer; }
   /* 弹窗遮罩更深一点，深色下才有层级 */
   .fb-mask, .wx-guide-mask { background: rgba(0, 0, 0, .68); }
 }
+
+/* ------------------------------------------------- 桌面端：搜索栏与列表卡对齐
+   搜索栏原本被 max-width:640px 卡成半宽，和上下整行卡片不是一个宽度，看着像错位；
+   上下两块间距也不等（2px / 38px）。这里统一成：整行宽 + 上下各 18px。
+   手机端（≤720px）不动。 */
+@media (min-width: 721px) {
+  .auth { margin-bottom: 18px; }
+  .controls { padding-bottom: 0; }
+  .grid { margin-top: 18px; }
+  .controls-row { max-width: none; }
+}
