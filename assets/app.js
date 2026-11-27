@@ -246,7 +246,6 @@
         '" title="' + esc(sceneName(p.scenario)) + '">' + esc(sceneName(p.scenario)) + '</span>') +
       '<span class="pkg-main">' +
         '<code class="pkg-file" title="' + esc(p.file) + '">' + esc(p.file) + ditto + '</code>' +
-        '<span class="pkg-hits" hidden></span>' +
       '</span>' +
       '<span class="pkg-actions">' +
         (noLink
@@ -356,7 +355,6 @@
           '<div class="card-desc">' + esc(e.file) + '</div>' +
         '</div>' +
         '<span class="extra-actions">' +
-          '<span class="pkg-hits" hidden></span>' +
           '<button class="cp-btn js-copy" type="button" data-copy="' + esc(e.url) +
             '" title="复制下载链接" aria-label="复制下载链接">' + ICONS.copy + '复制</button>' +
           '<a class="dl-btn" href="' + esc(e.url) + '" download target="_blank" rel="noopener" ' +
@@ -446,44 +444,21 @@
   /* ------------------------------------------- 云服务：下载计数 + 问题反馈 */
   var CLOUD = window.FCBCloud || null;
   var hitMap = {};
-  var hitChip = document.getElementById('hitChip');
-  var hitTotalEl = document.getElementById('hitTotal');
   var footHits = document.getElementById('footHits');
 
   function cloudDisabled() {
     return !CLOUD;
   }
 
-  /* 把云端计数画到每一行（计数为 0 的行不显示，避免满屏 0） */
+  /* 只在页脚展示「全站累计下载总数」，单条安装包不显示次数 */
   function paintHits() {
+    if (!footHits) return;
     var total = 0;
     Object.keys(hitMap).forEach(function (k) { total += hitMap[k]; });
-
-    Array.prototype.forEach.call(document.querySelectorAll('[data-hit-key]'), function (host) {
-      var label = host.querySelector('.pkg-hits');
-      if (!label) return;
-      var n = hitMap[host.getAttribute('data-hit-key')] || 0;
-      if (n > 0) {
-        label.textContent = n + ' 次下载';
-        label.title = '本站累计下载 ' + n + ' 次';
-        label.hidden = false;
-      } else {
-        label.hidden = true;
-      }
-    });
-
-    if (total > 0) {
-      var num = total.toLocaleString('zh-CN');
-      if (hitChip && hitTotalEl) {
-        hitTotalEl.textContent = num + ' 次下载';
-        hitChip.title = '本站累计下载次数（云端统计）';
-        hitChip.hidden = false;
-      }
-      if (footHits) {
-        footHits.textContent = '累计下载 ' + num + ' 次';
-        footHits.hidden = false;
-      }
-    }
+    if (total <= 0) return;
+    footHits.textContent = '本站累计下载 ' + total.toLocaleString('zh-CN') + ' 次';
+    footHits.title = '全站累计下载次数（云端统计）';
+    footHits.hidden = false;
   }
 
   /* 点下载即记一次；失败静默，绝不影响下载本身 */

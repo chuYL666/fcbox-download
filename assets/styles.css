@@ -640,8 +640,8 @@ button { font-family: inherit; cursor: pointer; }
   padding-top: 24px;
   border-top: 1px solid var(--line);
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   gap: 28px;
   flex-wrap: wrap;
 }
@@ -654,9 +654,16 @@ button { font-family: inherit; cursor: pointer; }
 }
 .foot p { margin: 0; font-size: 12.5px; color: var(--muted); line-height: 1.75; }
 .foot-meta {
-  display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
+  display: flex; flex-direction: row; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 8px 18px;
   font-size: 12px; color: var(--faint);
   font-variant-numeric: tabular-nums;
+}
+/* 页脚一行：最后同步 · 本站累计下载 N 次 · 反馈问题 */
+#footHits::before {
+  content: '·';
+  margin-right: 18px;
+  color: var(--line);
 }
 .foot-meta a { color: var(--brand); font-weight: 500; }
 .foot-meta a:hover { text-decoration: underline; }
@@ -783,7 +790,8 @@ button { font-family: inherit; cursor: pointer; }
   .extras-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
 
   .foot { flex-direction: column; margin-top: 34px; gap: 16px; }
-  .foot-meta { align-items: flex-start; }
+  .foot-meta { align-items: center; gap: 6px 12px; }
+  #footHits::before { margin-right: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -910,11 +918,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 
-/* ====================================================== 云服务：下载计数 */
-.stat-chip { gap: 6px; }
-.stat-chip svg { width: 13px; height: 13px; opacity: .78; }
-.stat-chip b { font-weight: 600; color: rgba(255, 255, 255, .92); }
-
+/* ====================================================== 行内排版（单条不再显示下载次数） */
 .pkg-main {
   display: flex;
   align-items: baseline;
@@ -923,23 +927,6 @@ button { font-family: inherit; cursor: pointer; }
   overflow: hidden;
 }
 .pkg-main > .pkg-file { flex: 0 1 auto; min-width: 0; }
-
-/* 手机端顶栏放不下统计胶囊，累计次数改由页脚展示 */
-@media (max-width: 720px) {
-  .topbar-right .stat-chip { display: none !important; }
-}
-
-.pkg-hits {
-  flex: none;
-  font-size: 11px;
-  color: var(--faint);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-  padding: 1px 6px;
-  border-radius: 999px;
-  background: var(--card-2);
-  border: 1px solid var(--line);
-}
 
 /* ====================================================== 云服务：问题反馈 */
 .foot-report {
@@ -1035,7 +1022,6 @@ button { font-family: inherit; cursor: pointer; }
 
 @media (max-width: 720px) {
   .pkg-main { flex-wrap: wrap; row-gap: 3px; }
-  .pkg-hits { font-size: 10px; }
   .fb-card { padding: 16px 15px 13px; border-radius: 14px; }
 }
 
