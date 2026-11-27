@@ -142,12 +142,6 @@ function pwdAdminCalc() {
   if (h) { h.innerHTML = "N=" + n + " → N+1=" + plus1 + " → md5=" + full; h.className = "phint"; }
 }
 
-function pwdAdminDemo() {
-  var i = document.getElementById("pwTitle");
-  if (i) { i.value = "请输入密码(1764230000000)"; i.focus(); }
-  pwdAdminCalc();
-}
-
 function pwdAdminClear() {
   var i = document.getElementById("pwTitle");
   if (i) i.value = "";

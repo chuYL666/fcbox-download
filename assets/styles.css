@@ -1334,3 +1334,34 @@ button { font-family: inherit; cursor: pointer; }
   background: #FFF8E1; border: 1px solid #E8D48A; border-radius: 8px;
   font-size: 11px; line-height: 1.6; color: #6B4E00;
 }
+
+/* ---------- 深色模式：与「资产烧录授权」统一为深橄榄底 + 黄绿强调 ---------- */
+@media (prefers-color-scheme: dark) {
+  .pw {
+    background: -webkit-linear-gradient(160deg, #1b2113 0%, #151a10 100%);
+    background: linear-gradient(160deg, #1b2113 0%, #151a10 100%);
+    border-color: #333c22;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+  }
+  .pw .pt { color: #d7e9a8; }
+  .pw .pkey { background: rgba(255, 255, 255, .06); border-color: #464f30; color: #cbe08f; }
+  .pw .parr { border-top-color: #9fb36a; }
+  .pw.on .parr { border-bottom-color: #9fb36a; }
+  .pw .psec { background: #12160d; }
+  .pw .plab { color: #9fb36a; }
+  .pw .pval { color: #d7e9a8; }
+  .pw .pval.idle { color: #59614a; }
+  .pw .phint { color: #9fb36a; }
+  .pw .phint.warn { color: #e8c766; }
+  .pw .pin { background: #12160d; border-color: #4b5a2c; color: var(--ink); }
+  .pw .pin:focus {
+    border-color: #b5d96e;
+    -webkit-box-shadow: inset 0 0 0 1px #b5d96e;
+    box-shadow: inset 0 0 0 1px #b5d96e;
+  }
+  .pw .pin::-webkit-input-placeholder { color: #7f8c66; }
+  .pw .pin::placeholder { color: #7f8c66; }
+  .pw .pbtn { background: rgba(255, 255, 255, .06); border-color: #4b5a2c; color: #cbe08f; }
+  .pw .pbtn.pri { background: #b5d96e; border-color: #b5d96e; color: #22300c; }
+  .pw .pnote { background: #2a2011; border-color: #3d2f18; color: #f0d9a8; }
+}
