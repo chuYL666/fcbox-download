@@ -10,7 +10,7 @@
 <title>智能柜软件清单 · 下载站</title>
 <meta name="description" content="丰巢智能柜各柜型 / 场景的软件安装包（APK）可视化下载页，数据自动同步自企业微信《丰巢智能柜软件应用清单》文档。">
 <link rel="preconnect" href="https://fchibox-1251779293.file.myqcloud.com">
-<link rel="stylesheet" href="./assets/styles.css?v=20261127164408">
+<link rel="stylesheet" href="./assets/styles.css?v=20261127170517">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23e1251b'/%3E%3Cpath d='M9 11h14v13H9z' fill='%23fff' opacity='.95'/%3E%3Cpath d='M9 11h14v4H9z' fill='%230c1220' opacity='.25'/%3E%3Cpath d='M12 8h8v3h-8z' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -33,7 +33,7 @@
       <span class="sync-chip" id="syncChip">
         <i class="dot"></i><span id="syncText">正在载入…</span>
       </span>
-      <a class="app-entry" href="./app/index.html?v=20261127164408"
+      <a class="app-entry" href="./app/index.html?v=20261127170517"
          title="装到手机里随身带 · 没网也能查、能直接装">
         <span class="app-entry-ic" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3"></rect><path d="M12 7v6"></path><path d="M9.5 10.5 12 13l2.5-2.5"></path></svg>
@@ -79,6 +79,53 @@
       </div>
     </div>
   </section>
+
+<section class="pw on" id="pwd">
+  <div class="phd" onclick="pwdToggle()">
+    <span class="pt">智莱驱动口令</span>
+    <span class="pkey">离线计算</span>
+    <i class="parr"></i>
+  </div>
+  <div class="pbd">
+
+    <div class="psec">
+      <div class="plab">① 启动登录 · 账号 zhilai</div>
+      <div class="pval" id="pwLogin">--------</div>
+      <div class="phint" id="pwLoginHint">密码 = 柜体当天日期 yyyyMMdd，以设备显示日期为准</div>
+      <input class="pin" id="pwDate" type="tel" maxlength="8" placeholder="改设备日期，如 20261127"
+             oninput="pwdDateInput()" onkeydown="if(event.keyCode==13)pwdDateApply()">
+      <div>
+        <span class="pbtn pri" onclick="pwdDateToday()">用今天</span>
+        <span class="pbtn" onclick="pwdCopy('pwLogin')">复制密码</span>
+      </div>
+    </div>
+
+    <div class="psec">
+      <div class="plab">② 管理员动态口令（长按「资产编码」）</div>
+      <div class="pval idle" id="pwAdmin">------</div>
+      <div class="phint" id="pwAdminHint">粘贴弹窗标题里的数字，自动算 md5(N+1) 前 6 位</div>
+      <input class="pin" id="pwTitle" type="text" placeholder="请输入密码(1764230000000)"
+             oninput="pwdAdminCalc()" onkeydown="if(event.keyCode==13)pwdAdminCalc()">
+      <div>
+        <span class="pbtn pri" onclick="pwdAdminCalc()">计算口令</span>
+        <span class="pbtn" onclick="pwdAdminDemo()">填入示例</span>
+        <span class="pbtn" onclick="pwdCopy('pwAdmin')">复制口令</span>
+        <span class="pbtn" onclick="pwdAdminClear()">清空</span>
+      </div>
+    </div>
+
+    <div class="psec">
+      <div class="plab">③ adb 直达（无需口令）</div>
+      <div class="pcmd" id="pwCmd1">adb shell am start -n com.lmxf.post/.ui.MainActivity</div>
+      <div><span class="pbtn" onclick="pwdCopy('pwCmd1')">复制免登录命令</span></div>
+      <div class="pcmd" id="pwCmd2">adb shell am start -n com.lmxf.post/.ui.AssetSettingActivity --ei flag 1</div>
+      <div><span class="pbtn" onclick="pwdCopy('pwCmd2')">复制最高权限命令</span></div>
+    </div>
+
+    <div class="pnote">仅用于自有 / 已授权柜体。普通点击「资产编码」是受限模式，必须长按；装了「智莱工具」或「资产编码设置工具」会被主界面强制退出；配置与日志在 /sdcard/zhilai/。</div>
+
+  </div>
+</section>
 
   <section class="controls" id="controls">
     <div class="controls-row">
@@ -180,10 +227,11 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="./data.js?v=20261127164408" defer></script>
-<script src="./assets/cloud.js?v=20261127164408" defer></script>
-<script src="./assets/auth.js?v=20261127164408" defer></script>
-<script src="./assets/app.js?v=20261127164408" defer></script>
+<script src="./data.js?v=20261127170517" defer></script>
+<script src="./assets/cloud.js?v=20261127170517" defer></script>
+<script src="./assets/auth.js?v=20261127170517" defer></script>
+<script src="./assets/pwd.js?v=20261127170517" defer></script>
+<script src="./assets/app.js?v=20261127170517" defer></script>
 <script>
 /* 微信内置浏览器（X5 / WKWebView）会把整页 HTML 缓存很久，发版后经常还是旧页面。
    这里比对线上 build.json：和上次看到的构建号不同，就带 _b= 参数重载一次强制回源。
