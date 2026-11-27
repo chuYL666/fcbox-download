@@ -1329,12 +1329,6 @@ button { font-family: inherit; cursor: pointer; }
 }
 .pw .pbtn.pri { background: #3F5F14; border-color: #3F5F14; color: #FFFFFF; }
 .pw .pbtn:active { opacity: .85; }
-.pw .pcmd {
-  display: block; margin-top: 8px; padding: 10px 12px;
-  background: #FFFFFF; border: 1px solid #DDE7C4; border-radius: 8px;
-  font-family: monospace; font-size: 12px; line-height: 1.5;
-  color: #1A1D13; word-break: break-all;
-}
 .pw .pnote {
   margin-top: 12px; padding: 10px 12px;
   background: #FFF8E1; border: 1px solid #E8D48A; border-radius: 8px;
