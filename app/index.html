@@ -35,7 +35,15 @@
   }
   .btn:active { transform: translateY(1px); opacity: .92; }
   .btn[aria-disabled="true"] { background: #c9cdd4; box-shadow: none; }
-  .hint { margin-top: 14px; font-size: 12px; color: #a9aeb8; line-height: 1.7; }
+  /* 有新版本时给主按钮加一圈呼吸光，提示「该更新了」 */
+  .btn.fresh { animation: breathe 2s ease-in-out infinite; }
+  @keyframes breathe {
+    0%, 100% { box-shadow: 0 8px 20px rgba(250, 75, 43, .28); }
+    50% { box-shadow: 0 8px 26px rgba(250, 75, 43, .55); }
+  }
+  .state { margin-top: 14px; font-size: 12.5px; line-height: 1.7; color: #86909c; min-height: 21px; }
+  .state.fresh { color: #f5222d; font-weight: 600; }
+  .hint { margin-top: 8px; font-size: 12px; color: #a9aeb8; line-height: 1.7; }
   .hint b { white-space: nowrap; color: #86909c; }
   .alt { margin-top: 10px; font-size: 12px; color: #86909c; line-height: 1.7; }
   .alt a { color: #fa4b2b; text-decoration: none; border-bottom: 1px dashed rgba(250, 75, 43, .45); padding-bottom: 1px; }
@@ -57,6 +65,7 @@
     .meta { background: #26272f; }
     .meta span:last-child { color: #e8eaee; }
     .qr { border-top-color: #2a2b33; }
+    .state.fresh { color: #ff7875; }
   }
 </style>
 </head>
@@ -74,6 +83,7 @@
   </div>
 
   <a class="btn" id="dl" href="fcbox-catalog.apk" download>下载 APK</a>
+  <p class="state" id="state">正在获取最新版本…</p>
   <p class="hint">安装时若提示「未知来源」或风险应用，请选择<b>允许安装</b> / <b>继续安装</b></p>
   <p class="alt" id="alt">下载失败或点了没反应？<a id="mir" href="https://chuyl666.github.io/fcbox-download/app/fcbox-catalog.apk">换备用线路</a></p>
 
@@ -97,38 +107,95 @@
   var isWx = /MicroMessenger|QQ\//i.test(navigator.userAgent);
   var mask = document.getElementById('mask');
   var btn = document.getElementById('dl');
+  var state = document.getElementById('state');
+  var mir = document.getElementById('mir');
 
   /* 本站网关不回 206（不支持断点续传），小米自带浏览器用的是多线程下载器，
      遇到 200 全量响应会直接判失败。GitHub Pages 镜像支持 Range，给 MIUI 默认走镜像。 */
+  var LOCAL_APK = 'fcbox-catalog.apk';
   var MIRROR = 'https://chuyl666.github.io/fcbox-download/app/fcbox-catalog.apk';
   var isMiui = /MiuiBrowser|XiaoMi\//i.test(navigator.userAgent);
+  var base = isMiui ? MIRROR : LOCAL_APK;
+  var KEY = 'fcbox_app_ver';        // 本机上次下载过的版本
+  var VER = '';                     // 线上最新版本
+
   if (isMiui) {
-    btn.href = MIRROR;
     btn.textContent = '下载 APK（备用线路）';
     document.getElementById('alt').innerHTML =
       '已自动切到支持断点续传的线路；若仍失败，可长按复制链接到其他浏览器下载';
   }
 
+  /* 读取「上次下载的版本」：优先 URL 参数 ?ver=（App 内跳转会带自己的版本），
+     否则用本机 localStorage 记录。两条都没有就按首次安装处理。 */
+  function knownVersion() {
+    var m = /[?&]ver=([^&]+)/.exec(location.search);
+    if (m) return decodeURIComponent(m[1]);
+    try { return localStorage.getItem(KEY) || ''; } catch (e) { return ''; }
+  }
+
+  /* 同一个文件名反复覆盖，浏览器和 CDN 会把旧包缓存住，所以下载地址带上版本号 +
+     时间戳，保证「点一次拿到的一定是当前这一版」。 */
+  function apkUrl(v) {
+    return base + (base.indexOf('?') < 0 ? '?' : '&') + 'v=' + encodeURIComponent(v) + '&t=' + Date.now();
+  }
+
+  function remember(v) {
+    try { localStorage.setItem(KEY, v); } catch (e) {}
+  }
+
+  fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (v) {
+      VER = v.version;
+      document.getElementById('ver').textContent = 'v' + v.version;
+      var kb = v.size / 1024;
+      document.getElementById('size').textContent =
+        kb < 1024 ? Math.round(kb) + ' KB' : (kb / 1024).toFixed(1) + ' MB';
+      var d = new Date(v.updatedAt);
+      var day = '';
+      if (!isNaN(d)) {
+        day = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+        document.getElementById('date').textContent = day;
+      }
+
+      btn.href = apkUrl(v.version);
+      btn.setAttribute('download', '运维通_v' + v.version + '.apk');
+      mir.href = MIRROR;
+      var tail = isMiui ? '（备用线路）' : '';
+
+      var known = knownVersion();
+      if (known && known !== v.version) {
+        // 有旧版 → 主按钮直接就是「一键更新」
+        btn.textContent = '一键更新到 v' + v.version + tail;
+        btn.className = 'btn fresh';
+        state.className = 'state fresh';
+        state.textContent = '检测到你上次下载的是 v' + known + '，点上方按钮直接换新';
+      } else if (known) {
+        btn.textContent = '已是最新版，重新下载' + tail;
+        state.className = 'state';
+        state.textContent = '当前最新 v' + v.version + (day ? ' · ' + day + ' 发布' : '');
+      } else {
+        btn.textContent = '下载 APK v' + v.version + tail;
+        state.className = 'state';
+        state.textContent = '当前最新 v' + v.version + (day ? ' · ' + day + ' 发布' : '') + '，装过的下次打开会自动提示更新';
+      }
+    })
+    .catch(function () {
+      document.getElementById('ver').textContent = '最新版';
+      state.className = 'state';
+      state.textContent = '版本信息读取失败，仍可直接下载最新安装包';
+    });
+
+  btn.addEventListener('click', function (e) {
+    if (isWx) { e.preventDefault(); mask.classList.add('on'); return; }
+    if (VER) remember(VER);
+  });
+
   if (isWx) {
-    btn.addEventListener('click', function (e) { e.preventDefault(); mask.classList.add('on'); });
     if (window.innerWidth < 900) mask.classList.add('on');
   }
   document.getElementById('closeMask').addEventListener('click', function () {
     mask.classList.remove('on');
-  });
-
-  fetch('version.json?t=' + Date.now()).then(function (r) { return r.json(); }).then(function (v) {
-    document.getElementById('ver').textContent = 'v' + v.version;
-    var kb = v.size / 1024;
-    document.getElementById('size').textContent =
-      kb < 1024 ? Math.round(kb) + ' KB' : (kb / 1024).toFixed(1) + ' MB';
-    var d = new Date(v.updatedAt);
-    if (!isNaN(d)) {
-      document.getElementById('date').textContent =
-        d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
-    }
-  }).catch(function () {
-    document.getElementById('ver').textContent = '最新版';
   });
 })();
 </script>

@@ -85,6 +85,23 @@ Pages 分支源为 `main`，根目录发布，推上去后约半分钟自动构�
 - 线上：`https://fcbox-apk-center.app.workbuddy.host/app/index.html?sharecode=53XWPMSNJ2`
 - 镜像：`https://chuyl666.github.io/fcbox-download/app/`
 
+### 下载页「一键更新」
+
+`app/index.html` 不写死版本号，打开时实时读 `version.json`，据此算出按钮文案和下载地址：
+
+| 访问情况 | 按钮 |
+|---|---|
+| 首次访问 | 下载 APK vX.Y.Z |
+| 本机上次下载过旧版（localStorage），或链接带 `?ver=1.9.46` | **一键更新到 vX.Y.Z**（呼吸光提示） |
+| 本机已经下过当前版 | 已是最新版，重新下载 |
+
+下载地址拼成 `fcbox-catalog.apk?v=<版本>&t=<时间戳>`，保存文件名带版本号
+（`运维通_v1.9.47.apk`）。固定文件名反复覆盖会被浏览器/CDN 缓存住，加版本参数才能保证
+「点一次拿到的一定是当前这版」。**因此 App 发新版后本页无需改动、也无需重新发版**，
+`version.json` 一更新，页面自己就是最新的。
+
+App 内跳转到本页时带上 `?ver=<当前版本>`，页面即可直接显示「一键更新」。
+
 发版流程（在 `fcbox-catalog-app` 目录）：
 
 ```bash
