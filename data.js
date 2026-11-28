@@ -690,7 +690,7 @@ window.FCBOXDATA = {
     {
       "label": "大华监控软件",
       "file": "dahua.apk",
-      "url": "https://fchibox-1251779293.file.myqcloud.com/apk/20260526/dahua.apk"
+      "url": "https://fchibox-1251779293.file.myqcloud.com/factory/fcMonitor/dahua.apk"
     },
     {
       "label": "海康监控软件",
@@ -713,6 +713,6 @@ window.FCBOXDATA = {
     "scenarios": 10,
     "packages": 76
   },
-  "updatedAt": "2026-11-27 09:17",
-  "digest": "195fe022c96e"
+  "updatedAt": "2026-11-28 09:14",
+  "digest": "bb35b8663138"
 };
